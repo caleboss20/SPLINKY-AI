@@ -119,14 +119,14 @@ function Chatwindow({
                   >
                     <XMarkIcon className="w-6 h-6 " />
                   </div>
-                  <p className="text-lg font-small text-gray-700 leading-base">
+                  <p className="text-[17px] font-small text-gray-700 leading-base">
                     You've hit the free plan limit for SPLINKY-1. Responses will
                     use another model until your limit resets in 1 hour,or get
-                    splinKY Go.
+                    splinKY Pro.
                   </p>
                   <Link to="/premium">
                     <button className="shadow- font-semibold mt-6 px-12 text-lg  rounded-full w-full py-3 bg-blue-100 text-blue-500">
-                      Upgrade to Go
+                      Upgrade to Pro
                     </button>
                   </Link>
                 </div>

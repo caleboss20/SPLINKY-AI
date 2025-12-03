@@ -13,6 +13,7 @@ import {
   SparklesIcon,
   BoltIcon,
 } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 
 function Navbar({toggleSidebar}) {
   return (
@@ -28,8 +29,8 @@ function Navbar({toggleSidebar}) {
         <h2 className="text-xl">SplinKI</h2>
         <ChevronDownIcon className="w-4 h-4 text-gray-400 " />
       </div>
-
-      <div className=" px-3 py-2 flex bg-gray-200 rounded-full md:bg-violet-100 flex gap-2 items-center">
+        <Link to="/premium">
+        <div className=" px-3 py-2 flex bg-gray-200 cursor-pointer rounded-full md:bg-violet-100 flex gap-2 items-center">
         <BoltIcon className="w-4 h-4 text-gray-500 md:text-violet-500" />
         <h2 className="hidden text-gray-700 md:flex text-violet-700 font-medium ">
           Upgrade to Go
@@ -38,6 +39,8 @@ function Navbar({toggleSidebar}) {
           Get Plus
         </h2>
       </div>
+        </Link>
+      
 
       <div className="bg-white shadow-md px-4 py-2 rounded-full flex gap-6 items-center md:flex shadow-none bg-none">
         <UserIcon className="w-6 h-6 md:w-4 h-4" />

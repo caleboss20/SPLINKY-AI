@@ -52,7 +52,7 @@ function PremiumPage() {
 
   return (
     <>
-   <div className="flex flex-col p-10">
+   <div className="flex flex-col md:p-10">
     <div className="z-100 p-6 w-full bg-white flex flex-col md:">
       
       <Link to="/">

@@ -93,7 +93,7 @@ function Chatwindow({
         }
       `}</style>
 
-          <div className="fixed bottom-4 left-0 pl-2 pr-2 w-full bg-rd-300 md:flex justify-center items-center md:relative">
+          <div className="fixed bottom-1 left-0 pl-2 pr-2 w-full bg-rd-300 md:flex justify-center items-center md:relative">
             <InputBox
               handleCheck={handleCheck}
               handleClick={handleClick}

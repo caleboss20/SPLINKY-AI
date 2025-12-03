@@ -20,37 +20,7 @@ function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
  const scrollbarRef=useRef(null);
    const [messages, setMessages] = useState([
-    { id: "1", sender: "user", message: "Hi how are you?" },
-    { id: "2", sender: "chatbot", message: "Hi 👋 Caleb I'm doing well..." },
-    {
-      id: "3",
-      sender: "user",
-      message:
-        "What is the salary of a React developer and how much will i be paid as a junior dev?",
-    },
-    {
-      id: "4",
-      sender: "chatbot",
-      message:
-        "The average salary of a React developer is $90,000 - $200,000. It may depend on location and experience.Developers in the united States could earn around an average of $144,000 according to glassdoor.",
-    },
-    {
-      id: "5",
-      sender: "user",
-      message: "Oh I see so with typescript and React I could earn big?",
-    },
-    {
-      id: "6",
-      sender: "chatbot",
-      message:
-        "oh yeah so i am very happy to tell you you could earn very high,Caleb seeing how you are commited as a developer will command a very high pay in the long term ,so keep building and shipping projects.😄",
-    },
-    {
-      id: "7",
-      sender: "user",
-      message:
-        "Oh i see i really get you.I'm very passionate about programming and i will continue to build tirelessly no worries,thank you🤝",
-    },
+   
   ]);
   useEffect(()=>{
    const scrollingbar=scrollbarRef.current;

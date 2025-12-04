@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { XMarkIcon,SparklesIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon, SparklesIcon } from "@heroicons/react/24/outline";
 import InputBox from "./InputBox";
 import { Link } from "react-router-dom";
 function Chatwindow({
@@ -10,6 +10,8 @@ function Chatwindow({
   handleCheck,
   handleClick,
   messages,
+  selectedImage,
+  setselectedImage,
 }) {
   let fullText = "Hello I'm Splinky AI";
   const [displayedText, setDisplayedText] = useState("");
@@ -74,16 +76,16 @@ function Chatwindow({
           >
             <div className="flex gap-3 items-center">
               {displayedwelcome}
-            <SparklesIcon className="w-6 h-6 mt-1
+              <SparklesIcon
+                className="w-6 h-6 mt-1
              bg-gradient-to-r from-blue-400 via-pink-400 to-blue-500
           bg-[length:300%_300%]
           bg-clip-text text-violet-500
           animate-[gradientMove_4s_ease_infinite]
           drop-shadow-[0_0_20px_rgba(255,0,255,0.4)]
-            " />
-            
+            "
+              />
             </div>
-            
           </motion.h2>
           <style>{`
         @keyframes gradientMove {
@@ -100,6 +102,8 @@ function Chatwindow({
               changeIcon={changeIcon}
               messages={messages}
               input={input}
+              selectedImage={selectedImage}
+              setselectedImage={setselectedImage}
             />
           </div>
 
@@ -110,7 +114,7 @@ function Chatwindow({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
                 transition={{ duration: 1 }}
-                className="absolute bottom-10 px-4 py-4 rounded- h-80 bg-vilet-500 md:hidden"
+                className="z-[1] absolute bottom-10 px-4 py-4 rounded- h-80 bg-viole-500 md:hidden"
               >
                 <div className="relative rounded-2xl bg-white px-9 py-6 shadow-[0_4px_24px_rgba(0,0,0,0.08)] bg">
                   <div

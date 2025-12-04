@@ -9,7 +9,9 @@ function ChatPage({
   changeIcon,
   handleCheck,
   handleClick,
-  scrollbarRef
+  scrollbarRef,
+  selectedImage,
+  setselectedImage
 }) {
   return (
     <div
@@ -17,7 +19,7 @@ function ChatPage({
      className="">
       <div 
       ref={scrollbarRef}
-      className="flex flex-col justify-center space-y-4 p-4 bg-yello-400 h-full">
+      className="flex flex-col justify-center space-y-4 p-4 bg-yello-400 h-full mb-30">
         {messages.map((item) => (
           <div
             key={item.id}
@@ -28,7 +30,7 @@ function ChatPage({
             <div
               className={`p-4 rounded-xl ${
                 item.sender === "user"
-                  ? "bg-gray-100 text-black"
+                  ? "text-black"
                   : "bg-white text-black"
               }`}
             >
@@ -50,11 +52,18 @@ function ChatPage({
               ))}
               </div>
               ) : (
-                <span className="text-lg">{item.message}</span>
+                <>
+                {item.image &&
+                (<img src={item.image} className="w-70 h-90 rounded-xl"/>)}
+                {item.message? <span className={`text-sm ${item.sender==="user"? "bg-gray-100 py-1 px-5 rounded-xl":null}`}>{item.message}</span> :null}
+               
+                </>
               )}
             </div>
           </div>
         ))}
+
+        
       </div>
       <div className="pb-2 fixed bottom-0 left-0 bg-white md:overflow-x-hidden pl-2 pr-2 left-0 md:left-105 fixed bottom-0 w-full bg-re-300">
         <InputBox
@@ -62,6 +71,8 @@ function ChatPage({
           handleClick={handleClick}
           changeIcon={changeIcon}
           input={input}
+          selectedImage={selectedImage}
+          setselectedImage={setselectedImage}
         />
       </div>
     </div>

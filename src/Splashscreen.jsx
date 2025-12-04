@@ -54,7 +54,7 @@ function Splashscreen({ onFinish }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
             >
-              SplinKI
+              SplinKY
             </motion.h2>
           </div>
           {/* Subtle shimmer overlay */}

@@ -93,7 +93,7 @@ function Chatwindow({
         }
       `}</style>
 
-          <div className="fixed bottom-1 left-0 pl-2 pr-2 w-full bg-rd-300 md:flex justify-center items-center md:relative">
+          <div className="fixed bottom-0.5 left-0 pl-2 pr-2 w-full bg-rd-300 md:flex justify-center items-center md:relative">
             <InputBox
               handleCheck={handleCheck}
               handleClick={handleClick}
@@ -110,9 +110,9 @@ function Chatwindow({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
                 transition={{ duration: 1 }}
-                className="absolute bottom-22 px-4 py-4 rounded- h-80 bg-vilet-500 md:hidden"
+                className="absolute bottom-10 px-4 py-4 rounded- h-80 bg-vilet-500 md:hidden"
               >
-                <div className="relative rounded-lg bg-white px-9 py-6 shadow-lg bg">
+                <div className="relative rounded-2xl bg-white px-9 py-6 shadow-[0_4px_24px_rgba(0,0,0,0.08)] bg">
                   <div
                     className="absolute right-4"
                     onClick={() => setShowPopup(!showPopup)}
@@ -125,7 +125,7 @@ function Chatwindow({
                     splinKY Pro.
                   </p>
                   <Link to="/premium">
-                    <button className="shadow- font-semibold mt-6 px-12 text-lg  rounded-full w-full py-3 bg-blue-100 text-blue-500">
+                    <button className="shadow-sm font-medium active:scale-[0.98] transition mt-6 px-12 text-lg  rounded-full w-full py-3 bg-blue-100 text-blue-500">
                       Upgrade to Pro
                     </button>
                   </Link>

@@ -20,7 +20,13 @@ import {
   ArrowLeftIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
-function Sidebar({ sidebarOpen, setSidebarOpen,changeIconTop,setIconchange,iconchange }) { 
+function Sidebar({
+  sidebarOpen,
+  setSidebarOpen,
+  changeIconTop,
+  setIconchange,
+  iconchange,
+}) {
   const [sidebarhistory, setSidebarhistory] = useState([
     { title: "Git force push advice" },
     { title: "Chinese speaking lesson" },
@@ -31,26 +37,39 @@ function Sidebar({ sidebarOpen, setSidebarOpen,changeIconTop,setIconchange,iconc
     { title: "Fixing code errors" },
     { title: "Vercel import error fix" },
   ]);
+  const [searchItem, setsearchItem] = useState("");
+  const handleSearch = (e) => {
+    setsearchItem(e.target.value);
+    console.log(searchItem);
+  };
+  const filteredHistory = sidebarhistory.filter((msg) =>
+    msg.title.toLowerCase().includes(searchItem.trim().toLowerCase())
+  );
+
   return (
     <>
       <div
-        className={` relative flex flex-col pt-4 pl-3 gap-8 overflow-y-auto md:h-220`}>
+        className={` relative flex flex-col pt-4 pl-3 gap-8 overflow-y-auto md:h-220`}
+      >
         <div className={`flex justify-between bg-red-00 items-center pr-3`}>
           <div className="flex">
             <div className="items-center border-none outline-none px-7 flex w-full mr-4 rounded-full bg-gray-200 md:hidden">
               {iconchange ? (
                 <ArrowLeftIcon className="w-6 h-6 text-gray-700" />
               ) : (
-                <div onClick={()=>setIconchange(!iconchange)}><MagnifyingGlassIcon className="w-6 h-6 text-gray-700" /></div>
+                <div onClick={() => setIconchange(!iconchange)}>
+                  <MagnifyingGlassIcon className="w-6 h-6 text-gray-700" />
+                </div>
               )}
 
               <input
                 onFocus={changeIconTop}
                 type="text"
+                onChange={handleSearch}
+                value={searchItem}
                 placeholder="Search"
                 className="border-none outline-none px-7 py-3 flex-1 w-full rounded-full bg-gray-200 text-gray-900 text-lg"
               />
-              
             </div>
             <BoltIcon className="w-6 h-6 text-black hidden md:flex" />
           </div>
@@ -78,7 +97,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen,changeIconTop,setIconchange,iconc
 
         <div className="w-full h-50 bg--500 pl-1 flex flex-col gap-5">
           {/**for each item on the sidebar search history */}
-          {sidebarhistory.map((item, index) => {
+
+          {filteredHistory.map((item, index) => {
             return (
               <div key={index}>
                 <span className="text-black">{item.title}</span>

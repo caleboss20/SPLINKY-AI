@@ -2,14 +2,16 @@ import { PlusIcon, MicrophoneIcon,ArrowUpIcon } from "@heroicons/react/24/outlin
 import { useState } from "react";
 function InputBox({handleCheck,handleClick,changeIcon,messages,input}) {
   return (
-    <div className="flex border gap-2 h-15 border-gray-300 pl-4 py-0 pr-6 rounded-full shadow-md md:w-140 border border-gray-300 pl-4 py-0 pr-2 rounded-full shadow-md md:flex items-center">
+    <div className="flex border gap-2 h-15 border-gray-300 pl-4 py-0 pr-8 rounded-full shadow-md md:w-140 border border-gray-300 pl-4 py-0 pr-2 rounded-full shadow-md md:flex items-center">
           <div>
             <PlusIcon className="w-5 h-5" />
           </div>
           <input
             value={input}
             onChange={handleCheck}
-            className="flex-1 text-lg outline-none border-none rounded-lg px-4 py-4 text-black text-sm font-normal"
+            className="
+          
+            flex-1 text-lg outline-none border-none rounded-lg px-4 py-4 text-black text-sm font-normal"
             placeholder="Ask SplinKI"
             type="text"/>
             

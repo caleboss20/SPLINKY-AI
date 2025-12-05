@@ -11,7 +11,10 @@ function ChatPage({
   handleClick,
   scrollbarRef,
   selectedImage,
-  setselectedImage
+  setselectedImage,
+  selectedChatId,
+  setChats,
+  selectedChat,
 }) {
   return (
     <div
@@ -19,8 +22,8 @@ function ChatPage({
      className="">
       <div 
       ref={scrollbarRef}
-      className="flex flex-col justify-center space-y-4 p-4 bg-yello-400 h-full mb-30">
-        {messages.map((item) => (
+      className="mt-5 flex flex-col justify-center space-y-4 p-4 bg-yello-400 h-full mb-30">
+        {selectedChat?.messages.map((item) => (
           <div
             key={item.id}
             className={`w-full flex ${

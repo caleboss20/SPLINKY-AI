@@ -16,59 +16,142 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [input, setInput] = useState("");
   const [changeIcon, setChangeIcon] = useState(false);
-  const [showchatpage, setshowchatpage] = useState(false);
+  const [showChatPage, setShowChatPage] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const scrollbarRef = useRef(null);
-  const [messages, setMessages] = useState([]);
- 
+  const [chats, setChats] = useState([
+    { id: crypto.randomUUID(),
+       title: "chat1", messages: [] 
+      },
+       { id: crypto.randomUUID(),
+       title: "chat2", messages: [] 
+      },
+       { id: crypto.randomUUID(),
+       title: "chat3", messages: [] 
+      },
+  ]);
+
+
+  const [selectedChatId, setSelectedChatId] = useState(chats[0].id);
+  const selectedChat = chats.find((chat) => chat.id === selectedChatId);
   useEffect(() => {
     const scrollingbar = scrollbarRef.current;
     if (scrollingbar) scrollingbar.scrollTop = scrollingbar.scrollHeight;
-  }, [messages]);
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+  }, [selectedChat?.messages]);
+
+  const toggleSidebar = () =>
+     setSidebarOpen(!sidebarOpen);
+
   const [iconchange, setIconchange] = useState(false);
-  const changeIconTop = () => setIconchange(!iconchange);
+  const changeIconTop = () =>
+  setIconchange(!iconchange);
+
   const handleCheck = (e) => {
     const value = e.target.value;
     setInput(value);
     setChangeIcon(value.trim() !== "");
   };
+
   const handleClick = async () => {
-    if (!input.trim() && !selectedImage) setshowchatpage(false);
-    else setshowchatpage(true);
+    if (!input.trim() && !selectedImage) return;
+    setShowChatPage(true);
     const userInput = input;
-    setMessages((messages) => [
-      ...messages,
-      { id: crypto.randomUUID(), sender: "user", message: userInput, typing: false, image: selectedImage || null },
-    ]);
+    // Add user message to the selected chat
+    setChats((prevChats) =>
+      prevChats.map((chat) =>
+        chat.id === selectedChatId? {
+              ...chat,
+              messages: [
+                ...chat.messages,
+                {
+                  id: crypto.randomUUID(),
+                  sender: "user",
+                  message: userInput,
+                  image: selectedImage || null,
+                  typing: false,
+                },
+              ],
+            }
+          : chat
+      )
+    );
     setInput("");
     setselectedImage(null);
-    setMessages((messages) => [
-      ...messages,
-      { id: "chatbot-typing", sender: "chatbot", message: "", typing: true },
-    ]);
+    // Add typing indicator
+    setChats((prevChats) =>
+      prevChats.map((chat) =>
+        chat.id === selectedChatId
+          ? {
+              ...chat,
+              messages: [
+                ...chat.messages,
+                {
+                  id: "chatbot-typing",
+                  sender: "chatbot",
+                  message: "",
+                  typing: true,
+                },
+              ],
+            }
+          : chat
+      )
+    );
     try {
-      const res = await axios.post("http://localhost:5000/api/chat", { prompt: userInput });
-      const BotResponse = { id: crypto.randomUUID(), sender: "chatbot", message: res.data.reply, typing: false };
-      setMessages((prev) => [...prev.filter((msg) => msg.id !== "chatbot-typing"), BotResponse]);
+      const res = await axios.post("http://localhost:5000/api/chat", {
+        prompt: userInput,
+      });
+      const botResponse = {
+        id: crypto.randomUUID(),
+        sender: "chatbot",
+        message: res.data.reply,
+        typing: false,
+      };
+      // Replace typing indicator with actual response
+      setChats((prevChats) =>
+        prevChats.map((chat) =>
+          chat.id === selectedChatId
+            ? {
+                ...chat,
+                messages: chat.messages
+                  .filter((m) => m.id !== "chatbot-typing")
+                  .concat(botResponse),
+              }
+            : chat
+        )
+      );
     } catch (err) {
       console.log(err);
-      setMessages((prev) => [
-        ...prev.filter((msg) => msg.id !== "chatbot-typing"),
-        { id: crypto.randomUUID(), sender: "chatbot", message: "something went wrong. Try again.", typing: false },
-      ]);
+      setChats((prevChats) =>
+        prevChats.map((chat) =>
+          chat.id === selectedChatId
+            ? {
+                ...chat,
+                messages: chat.messages
+                  .filter((m) => m.id !== "chatbot-typing")
+                  .concat({
+                    id: crypto.randomUUID(),
+                    sender: "chatbot",
+                    message: "Something went wrong. Try again.",
+                    typing: false,
+                  }),
+              }
+            : chat
+        )
+      );
     }
   };
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 5000);
     return () => clearTimeout(timer);
   }, []);
-  // Sync darkMode state with html class
+
   useEffect(() => {
     if (darkMode) document.documentElement.classList.add("dark");
     else document.documentElement.classList.remove("dark");
   }, [darkMode]);
+
   if (loading) return <Splashscreen />;
+
   return (
     <div className="w-full h-full bg-white dark:bg-black">
       <Routes>
@@ -78,7 +161,16 @@ function App() {
             <div className="flex h-screen w-screen overflow-x-hidden overflow-y-auto">
               {/* Desktop sidebar */}
               <aside className="hidden w-64 h-screen overflow-y-auto bg-gray-50 dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 md:flex">
-                <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} setDarkmode={setDarkmode} darkMode={darkMode} />
+                <Sidebar
+                  chats={chats}
+                  setSelectedChatId={setSelectedChatId}
+                  selectedChatId={selectedChatId}
+                  setShowChatPage={setShowChatPage}
+                  sidebarOpen={sidebarOpen}
+                  setSidebarOpen={setSidebarOpen}
+                  setDarkmode={setDarkmode}
+                  darkMode={darkMode}
+                />
               </aside>
               {/* Mobile sidebar */}
               <AnimatePresence>
@@ -93,21 +185,30 @@ function App() {
                       exit={{ opacity: 0 }}
                     />
                     <motion.div
-                      className={`fixed top-0 left-0 h-full ${iconchange ? "w-full" : "w-78"} bg-gray-50 dark:bg-gray-900 z-50 md:hidden`}
+                      className={`fixed top-0 left-0 h-full ${
+                        iconchange ? "w-full" : "w-78"
+                      } bg-gray-50 dark:bg-gray-900 z-50 md:hidden`}
                       initial={{ x: "-40%" }}
                       animate={{ x: 0 }}
                       exit={{ x: "-100%" }}
-                      transition={{ type: "spring", stiffness: 100, damping: 10 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 100,
+                        damping: 10,
+                      }}
                     >
                       <Sidebar
+                        chats={chats}
+                        setSelectedChatId={setSelectedChatId}
+                        selectedChatId={selectedChatId}
+                        setShowChatPage={setShowChatPage}
                         sidebarOpen={sidebarOpen}
                         setSidebarOpen={setSidebarOpen}
-                        toggleSidebar={toggleSidebar}
+                        setDarkmode={setDarkmode}
+                        darkMode={darkMode}
                         changeIconTop={changeIconTop}
                         setIconchange={setIconchange}
                         iconchange={iconchange}
-                        setDarkmode={setDarkmode}
-                        darkMode={darkMode}
                       />
                     </motion.div>
                   </>
@@ -120,29 +221,29 @@ function App() {
                 </header>
                 <div className="bg-blu-500 flex flex-col flex-1">
                   <main className="flex-1 overflow-y-auto bg-white dark:bg-black">
-                    {showchatpage ? (
+                    {showChatPage ? (
                       <ChatPage
                         scrollbarRef={scrollbarRef}
-                        messages={messages}
-                        setMessages={setMessages}
+                        selectedChat={selectedChat}
+                        handleClick={handleClick}
+                        handleCheck={handleCheck}
+                        changeIcon={changeIcon}
                         input={input}
                         setInput={setInput}
-                        changeIcon={changeIcon}
-                        handleCheck={handleCheck}
-                        handleClick={handleClick}
+                        selectedChatId={selectedChatId}
+                        setChats={setChats}
                         selectedImage={selectedImage}
                         setselectedImage={setselectedImage}
                       />
                     ) : (
                       <Chatwindow
-                        messages={messages}
                         input={input}
                         setInput={setInput}
+                        handleClick={handleClick}
+                        handleCheck={handleCheck}
                         changeIcon={changeIcon}
                         setChangeIcon={setChangeIcon}
-                        handleCheck={handleCheck}
-                        handleClick={handleClick}
-                        setshowchatpage={setshowchatpage}
+                        setShowChatPage={setShowChatPage}
                         selectedImage={selectedImage}
                         setselectedImage={setselectedImage}
                       />

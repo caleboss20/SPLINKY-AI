@@ -1,5 +1,6 @@
 import { ArrowLeftIcon, MinusIcon } from "@heroicons/react/24/outline";
 import { CheckIcon } from "@heroicons/react/24/solid";
+import { FaCreditCard,FaPaypal,FaMobileAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -139,7 +140,7 @@ function PremiumPage() {
             {/**payment popup */}
             {paymentpop && (
               <>
-                <div className=" z-10 fixed bottom-0 left-0 right-0 w-full h-[420px] bg-white  md:hidden">
+                <div className="pt-3 z-10 fixed bottom-0 left-0 right-0 w-full h-[420px] bg-white  md:hidden">
                   <h2 className="text-xl font-semibold text-gray-900 ml-4 pt-2">
                     Google Play
                   </h2>
@@ -159,14 +160,17 @@ function PremiumPage() {
                     </p>
                     {/* Payment Options */}
                     <div className="flex flex-col gap-3 mt-6">
-                      <div className="w-full py-4 border border-gray-300 rounded-lg px-3">
-                        Credit or Debit Card
+                      <div className="flex gap-4 items-center w-full py-4 border border-gray-300 rounded-lg px-3">
+                       <div><FaCreditCard className="text-blue-800 h-5 w-5"/></div>
+                       <span>Credit or Debit Card</span> 
                       </div>
-                      <div className="w-full py-4 border border-gray-300 rounded-lg px-3">
-                        Mobile Money
+                      <div className="flex gap-4 w-full py-4 border border-gray-300 rounded-lg px-3">
+                        <div><FaMobileAlt className="text-blue-800 h-5 w-5"/></div>
+                        <span>Mobile Money</span>
                       </div>
-                      <div className="w-full py-4 border border-gray-300 rounded-lg px-3">
-                        PayPal
+                      <div className="flex gap-4 w-full py-4 border border-gray-300 rounded-lg px-3">
+                         <div><FaPaypal className="text-blue-800 h-5 w-5"/></div>
+                        <span>PayPal</span>
                       </div>
                     </div>
                   </div>

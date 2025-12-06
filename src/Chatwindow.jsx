@@ -44,7 +44,7 @@ function Chatwindow({
   const [showPopup, setShowPopup] = useState(true);
   return (
     <>
-      <div className="flex justify-center space-y-4 p-4 bg-yello-400 h-full ">
+      <div className="flex justify-center space-y-4 p-4 bg-yellw-400 h-full mt-5 ">
         <div className="flex flex-col gap-10 items-center mb-55 justify-center md:mt-30 ">
           <motion.h2
             initial={{ opacity: 0 }}

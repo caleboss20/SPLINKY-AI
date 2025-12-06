@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 
 function Navbar({toggleSidebar}) {
   return (
-    <div className="pl-2 pr-2 mt-2 justify-between flex items-center h-full  bg-re-100 bg-whit ">
+    <div className="pl-2 pr-2 pb-3 mt-2 justify-between flex items-center h-full  bg-re-100 bg-whit ">
       <div
         className="bg-white shadow-md p-2 rounded-full block md:hidden lg:hidden xl:hidden 2xl:hidden"
         onClick={toggleSidebar}

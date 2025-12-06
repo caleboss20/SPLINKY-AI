@@ -12,7 +12,14 @@ import {
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { motion } from "framer-motion";
-function InputBox({ handleCheck, handleClick, changeIcon, input,selectedImage,setselectedImage }) {
+function InputBox({
+  handleCheck,
+  handleClick,
+  changeIcon,
+  input,
+  selectedImage,
+  setselectedImage,
+}) {
   const [openbox, setOpenBox] = useState(false);
   const handlePopup = () => {
     setOpenBox(false);
@@ -39,10 +46,10 @@ function InputBox({ handleCheck, handleClick, changeIcon, input,selectedImage,se
             <>
               <div className=" z-[10000] p-6 fixed bottom-0 left-0 right-0 w-full h-[420px] bg-white rounded-lg md:hidden">
                 <div className="flex gap-5 ">
-                  <div className="flex-col rounded-xl h-25 flex justify-center items-center flex-1 bg-gray-100">
+                  <motion.div className="flex-col rounded-xl h-25 flex justify-center items-center flex-1 bg-gray-100">
                     <CameraIcon className="w-8 h-8" />
                     <span>Camera</span>
-                  </div>
+                  </motion.div>
 
                   <div
                     onClick={() => document.getElementById("fileInput").click()}
@@ -129,21 +136,47 @@ function InputBox({ handleCheck, handleClick, changeIcon, input,selectedImage,se
 
           <div className="flex gap-4 items-center">
             <MicrophoneIcon className="w-5 h-5 text-gray-700" />
-            <div
+            <motion.div
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
               onClick={handleClick}
-              className=" h-8 w-8 bg-black rounded-full items-center justify-center flex gap-0.5 cursor-pointer "
+              className="relative h-8 w-8 rounded-full flex items-center justify-center cursor-pointer"
             >
-              {changeIcon ? (
-                <ArrowUpIcon className="w-4 h-4 text-white" />
-              ) : (
-                <div className="h-8 w-8 bg-black rounded-full items-center justify-center flex gap-0.5 cursor-pointer">
-                  <span className="w-0.5 h-2 bg-white rounded-sm "></span>
-                  <span className="w-0.5 h-4 bg-white rounded-sm "></span>
-                  <span className="w-0.5 h-2 bg-white rounded-sm "></span>
-                  <span className="w-0.5 h-2 bg-white rounded-sm "></span>
-                </div>
-              )}
-            </div>
+              {/* Animated glowing border */}
+              <div className="absolute -inset-1 rounded-full animate-glow"></div>
+              {/* Button background */}
+              <div className="relative h-full w-full bg-violet-600 rounded-full flex items-center justify-center">
+                {changeIcon ? (
+                  <ArrowUpIcon className="w-4 h-4 text-white" />
+                ) : (
+                  <div className="h-8 w-8 rounded-full flex items-center justify-center gap-0.5">
+                    <span className="w-0.5 h-2 bg-white rounded-sm"></span>
+                    <span className="w-0.5 h-4 bg-white rounded-sm"></span>
+                    <span className="w-0.5 h-2 bg-white rounded-sm"></span>
+                    <span className="w-0.5 h-2 bg-white rounded-sm"></span>
+                  </div>
+                )}
+              </div>
+              {/* Glowing animation */}
+              <style>
+                {`
+                  @keyframes glow {
+                    0% {
+                      box-shadow: 0 0 5px #c04de0, 0 0 10px #8e2de2, 0 0 15px #ff6ec4;
+                    }
+                    50% {
+                      box-shadow: 0 0 15px #ff6ec4, 0 0 25px #c04de0, 0 0 35px #8e2de2;
+                    }
+                    100% {
+                      box-shadow: 0 0 5px #c04de0, 0 0 10px #8e2de2, 0 0 15px #ff6ec4;
+                    }
+                  }
+                  .animate-glow {
+                    animation: glow 3s ease-in-out infinite;
+                  }
+                `}
+              </style>
+            </motion.div>
           </div>
         </div>
       </div>

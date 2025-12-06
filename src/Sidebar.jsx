@@ -18,7 +18,8 @@ function Sidebar({
   darkMode,
   changeIconTop,
   setIconchange,
-  iconchange
+  iconchange,
+  showChatPage
 }) {
   const [searchItem, setSearchItem] = useState("");
   const handleSearch = (e) => setSearchItem(e.target.value);
@@ -86,6 +87,7 @@ function Sidebar({
               setShowChatPage(true);
             }}
           >
+         
             <span className="text-black dark:text-white">{chat.title}</span>
           </div>
         ))}

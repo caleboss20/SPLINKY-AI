@@ -17,6 +17,7 @@ function ChatPage({
   selectedChat,
 }) {
   return (
+    <>
     <div
    
      className="">
@@ -79,6 +80,7 @@ function ChatPage({
         />
       </div>
     </div>
+    </>
   );
 }
 export default ChatPage;

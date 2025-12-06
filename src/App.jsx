@@ -21,137 +21,146 @@ function App() {
   const scrollbarRef = useRef(null);
   const [chats, setChats] = useState([
     { id: crypto.randomUUID(),
-       title: "chat1", messages: [] 
+       title: "React developer roadmap", 
+       messages: [] 
       },
-       { id: crypto.randomUUID(),
-       title: "chat2", messages: [] 
-      },
-       { id: crypto.randomUUID(),
-       title: "chat3", messages: [] 
+
+    { id: crypto.randomUUID(),
+       title: "Best frontend skills",
+        messages: [] 
+    },
+
+    { id: crypto.randomUUID(),
+       title: "Discussing Salary ",
+        messages: [] 
       },
   ]);
-
-
-  const [selectedChatId, setSelectedChatId] = useState(chats[0].id);
-  const selectedChat = chats.find((chat) => chat.id === selectedChatId);
-  useEffect(() => {
-    const scrollingbar = scrollbarRef.current;
-    if (scrollingbar) scrollingbar.scrollTop = scrollingbar.scrollHeight;
-  }, [selectedChat?.messages]);
-
-  const toggleSidebar = () =>
-     setSidebarOpen(!sidebarOpen);
-
+  const [selectedChatId, setSelectedChatId] = useState(null);
   const [iconchange, setIconchange] = useState(false);
-  const changeIconTop = () =>
-  setIconchange(!iconchange);
-
+  
+  const selectedChat = chats.find((chat) => chat.id === selectedChatId);
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+  const changeIconTop = () => setIconchange(!iconchange);
   const handleCheck = (e) => {
     const value = e.target.value;
     setInput(value);
     setChangeIcon(value.trim() !== "");
   };
-
-  const handleClick = async () => {
-    if (!input.trim() && !selectedImage) return;
-    setShowChatPage(true);
-    const userInput = input;
-    // Add user message to the selected chat
-    setChats((prevChats) =>
-      prevChats.map((chat) =>
-        chat.id === selectedChatId? {
-              ...chat,
-              messages: [
-                ...chat.messages,
-                {
-                  id: crypto.randomUUID(),
-                  sender: "user",
-                  message: userInput,
-                  image: selectedImage || null,
-                  typing: false,
-                },
-              ],
-            }
-          : chat
-      )
-    );
-    setInput("");
-    setselectedImage(null);
-    // Add typing indicator
+const handleClick = async () => {
+  if (!input.trim() && !selectedImage) return;
+  setShowChatPage(true);
+  const userInput = input;
+  // Function to summarize message for title
+  const summarizeMessage = (text) => {
+     if (!text) return "New Chat";
+  // Lowercase & remove punctuation
+  const cleanText = text.toLowerCase().replace(/[^\w\s]/g, "");
+  // Split into words
+  const words = cleanText.split(/\s+/);
+  // Stopwords / filler words for professionals
+  const stopwords = new Set([
+    "the","is","in","at","of","a","an","and","or","to","can","you","i",
+    "it","for","on","with","that","this","are","be","as","by","from",
+    "please","hey","hi","charlie","mr","mrs","have","been"
+  ]);
+  // Filter out stopwords
+  const keywords = words.filter(word => !stopwords.has(word));
+  // Optional: pick top 5 keywords (or all if shorter)
+  const summary = keywords.slice(0, 5).join(" ");
+  // Capitalize first letter
+  return summary.charAt(0).toUpperCase() + summary.slice(1);
+  };
+  // Add user message and update title
+  setChats((prevChats) =>
+    prevChats.map((chat) =>
+      chat.id === selectedChatId
+        ? {
+            ...chat,
+            messages: [
+              ...chat.messages,
+              {
+                id: crypto.randomUUID(),
+                sender: "user",
+                message: userInput,
+                image: selectedImage || null,
+                typing: false,
+              },
+            ],
+            title: summarizeMessage(userInput), // update title here
+          }
+        : chat
+    )
+  );
+  setInput("");
+  setselectedImage(null);
+  // Add typing indicator
+  setChats((prevChats) =>
+    prevChats.map((chat) =>
+      chat.id === selectedChatId
+        ? {
+            ...chat,
+            messages: [
+              ...chat.messages,
+              { id: "chatbot-typing", sender: "chatbot", message: "", typing: true },
+            ],
+          }
+        : chat
+    )
+  );
+  try {
+    const res = await axios.post("http://localhost:5000/api/chat", { prompt: userInput });
+    const botResponse = {
+      id: crypto.randomUUID(),
+      sender: "chatbot",
+      message: res.data.reply,
+      typing: false,
+    };
+    // Replace typing indicator with response
     setChats((prevChats) =>
       prevChats.map((chat) =>
         chat.id === selectedChatId
           ? {
               ...chat,
-              messages: [
-                ...chat.messages,
-                {
-                  id: "chatbot-typing",
-                  sender: "chatbot",
-                  message: "",
-                  typing: true,
-                },
-              ],
+              messages: chat.messages
+                .filter((m) => m.id !== "chatbot-typing")
+                .concat(botResponse),
             }
           : chat
       )
     );
-    try {
-      const res = await axios.post("http://localhost:5000/api/chat", {
-        prompt: userInput,
-      });
-      const botResponse = {
-        id: crypto.randomUUID(),
-        sender: "chatbot",
-        message: res.data.reply,
-        typing: false,
-      };
-      // Replace typing indicator with actual response
-      setChats((prevChats) =>
-        prevChats.map((chat) =>
-          chat.id === selectedChatId
-            ? {
-                ...chat,
-                messages: chat.messages
-                  .filter((m) => m.id !== "chatbot-typing")
-                  .concat(botResponse),
-              }
-            : chat
-        )
-      );
-    } catch (err) {
-      console.log(err);
-      setChats((prevChats) =>
-        prevChats.map((chat) =>
-          chat.id === selectedChatId
-            ? {
-                ...chat,
-                messages: chat.messages
-                  .filter((m) => m.id !== "chatbot-typing")
-                  .concat({
-                    id: crypto.randomUUID(),
-                    sender: "chatbot",
-                    message: "Something went wrong. Try again.",
-                    typing: false,
-                  }),
-              }
-            : chat
-        )
-      );
-    }
-  };
+  } catch (err) {
+    console.log(err);
+    setChats((prevChats) =>
+      prevChats.map((chat) =>
+        chat.id === selectedChatId
+          ? {
+              ...chat,
+              messages: chat.messages
+                .filter((m) => m.id !== "chatbot-typing")
+                .concat({
+                  id: crypto.randomUUID(),
+                  sender: "chatbot",
+                  message: "Hi caleboss👋,how are you feeling today?",
+                  typing: false,
+                }),
+            }
+          : chat
+      )
+    );
+  }
+};
+
+  // Splashscreen
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 5000);
     return () => clearTimeout(timer);
   }, []);
-
+  // Dark mode
   useEffect(() => {
     if (darkMode) document.documentElement.classList.add("dark");
     else document.documentElement.classList.remove("dark");
   }, [darkMode]);
-
   if (loading) return <Splashscreen />;
-
   return (
     <div className="w-full h-full bg-white dark:bg-black">
       <Routes>
@@ -166,6 +175,7 @@ function App() {
                   setSelectedChatId={setSelectedChatId}
                   selectedChatId={selectedChatId}
                   setShowChatPage={setShowChatPage}
+                  showChatPage={showChatPage}
                   sidebarOpen={sidebarOpen}
                   setSidebarOpen={setSidebarOpen}
                   setDarkmode={setDarkmode}
@@ -185,23 +195,18 @@ function App() {
                       exit={{ opacity: 0 }}
                     />
                     <motion.div
-                      className={`fixed top-0 left-0 h-full ${
-                        iconchange ? "w-full" : "w-78"
-                      } bg-gray-50 dark:bg-gray-900 z-50 md:hidden`}
+                      className={`fixed top-0 left-0 h-full ${iconchange ? "w-full" : "w-78"} bg-gray-50 dark:bg-gray-900 z-50 md:hidden`}
                       initial={{ x: "-40%" }}
                       animate={{ x: 0 }}
                       exit={{ x: "-100%" }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 100,
-                        damping: 10,
-                      }}
+                      transition={{ type: "spring", stiffness: 100, damping: 10 }}
                     >
                       <Sidebar
                         chats={chats}
                         setSelectedChatId={setSelectedChatId}
                         selectedChatId={selectedChatId}
                         setShowChatPage={setShowChatPage}
+                        showChatPage={showChatPage}
                         sidebarOpen={sidebarOpen}
                         setSidebarOpen={setSidebarOpen}
                         setDarkmode={setDarkmode}
@@ -219,7 +224,7 @@ function App() {
                 <header className="h-14 bg-white dark:bg-gray-800">
                   <Navbar toggleSidebar={toggleSidebar} />
                 </header>
-                <div className="bg-blu-500 flex flex-col flex-1">
+                <div className="flex flex-col flex-1">
                   <main className="flex-1 overflow-y-auto bg-white dark:bg-black">
                     {showChatPage ? (
                       <ChatPage
@@ -260,6 +265,10 @@ function App() {
         <Route path="/premium" element={<PremiumPage />} />
       </Routes>
     </div>
+
+
+
+
   );
 }
 export default App;

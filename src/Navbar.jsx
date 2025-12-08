@@ -12,6 +12,7 @@ import {
   UserIcon,
   SparklesIcon,
   BoltIcon,
+  Cog6ToothIcon
 } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 
@@ -44,7 +45,9 @@ function Navbar({toggleSidebar}) {
 
       <div className="bg-white shadow-md px-4 py-2 rounded-full flex gap-6 items-center md:flex shadow-none bg-none">
         <UserIcon className="w-6 h-6 md:w-4 h-4" />
-        <ChatBubbleLeftRightIcon className="w-6 h-6 md:w-4 h-4" />
+        <Link to="/settings">
+        <Cog6ToothIcon className="w-6 h-6 md:w-4 h-4" />
+        </Link>
       </div>
     </div>
   );

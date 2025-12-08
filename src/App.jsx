@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Route, Routes } from "react-router-dom";
 import PremiumPage from "./PremiumPage";
 import axios from "axios";
+import Settings from "./Settings";
 function App() {
   const [darkMode, setDarkmode] = useState(false);
   const [selectedImage, setselectedImage] = useState(null);
@@ -263,6 +264,7 @@ const handleClick = async () => {
           }
         />
         <Route path="/premium" element={<PremiumPage />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </div>
 

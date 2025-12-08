@@ -157,25 +157,8 @@ function InputBox({
                   </div>
                 )}
               </div>
-              {/* Glowing animation */}
-              <style>
-                {`
-                  @keyframes glow {
-                    0% {
-                      box-shadow: 0 0 5px #c04de0, 0 0 10px #8e2de2, 0 0 15px #ff6ec4;
-                    }
-                    50% {
-                      box-shadow: 0 0 15px #ff6ec4, 0 0 25px #c04de0, 0 0 35px #8e2de2;
-                    }
-                    100% {
-                      box-shadow: 0 0 5px #c04de0, 0 0 10px #8e2de2, 0 0 15px #ff6ec4;
-                    }
-                  }
-                  .animate-glow {
-                    animation: glow 3s ease-in-out infinite;
-                  }
-                `}
-              </style>
+            
+              
             </motion.div>
           </div>
         </div>

@@ -27,8 +27,8 @@ function InputBox({
 
   return (
     <>
-      <div className="relative w-full bg-re-500 pt-16">
-        <div className="bg-re-300 flex border gap-2 h-15 border-gray-300 pl-4 py-0 pr-8 rounded-full shadow-md md:w-140 border border-gray-300 pl-4 py-0 pr-2 rounded-full shadow-md md:flex items-center">
+      <div className="relative w-full pt-16">
+        <div className=" flex border gap-2 h-15 border-gray-300 pl-4 py-0 pr-8 rounded-full shadow-md md:w-140 border border-gray-300 pl-4 py-0 pr-2 rounded-full shadow-md md:flex items-center">
           {selectedImage && (
             <div className="absolute top-0 w-26 h-14 rounded-lg bg-y-500">
               <img
@@ -44,16 +44,16 @@ function InputBox({
 
           {openbox && (
             <>
-              <div className=" z-[10000] p-6 fixed bottom-0 left-0 right-0 w-full h-[420px] bg-white rounded-lg md:hidden">
+              <div className=" z-[10000] p-6 fixed bottom-0 left-0 right-0 w-full h-[420px] bg-gray-700 rounded-lg ">
                 <div className="flex gap-5 ">
-                  <motion.div className="flex-col rounded-xl h-25 flex justify-center items-center flex-1 bg-gray-100">
-                    <CameraIcon className="w-8 h-8" />
+                  <motion.div className="flex-col rounded-xl h-25 flex justify-center items-center flex-1 bg-gray-600">
+                    <CameraIcon className="w-8 h-8 text-gray-900" />
                     <span>Camera</span>
                   </motion.div>
 
                   <div
                     onClick={() => document.getElementById("fileInput").click()}
-                    className="flex-col rounded-xl h-25 flex justify-center items-center flex-1 bg-gray-100"
+                    className="flex-col rounded-xl h-25 flex justify-center items-center flex-1 bg-gray-600"
                   >
                     <input
                       type="file"
@@ -67,11 +67,11 @@ function InputBox({
                         }
                       }}
                     />
-                    <PhotoIcon className="w-8 h-8" />
+                    <PhotoIcon className="w-8 h-8 text-gray-900" />
                     <span>Photos</span>
                   </div>
-                  <div className="flex-col rounded-xl h-25 flex justify-center items-center flex-1 bg-gray-100">
-                    <FolderIcon className="w-8 h-8" />
+                  <div className="flex-col rounded-xl h-25 flex justify-center items-center flex-1 bg-gray-600">
+                    <FolderIcon className="w-8 h-8 text-gray-900" />
                     <span>Files</span>
                   </div>
                 </div>
@@ -79,20 +79,20 @@ function InputBox({
                 <div className="flex flex-col mt-8">
                   <div className="items-center gap-4 flex w-full py-3 bg-vioet-400">
                     <div className="">
-                      <CubeIcon className="w-7 h-7" />
+                      <CubeIcon className="w-7 h-7 text-gray-900" />
                     </div>
                     <div>
                       <p className="text-lg text-black">Create image</p>
-                      <span className="text-gray-500">Visualize anything</span>
+                      <span className=" text-gray-900">Visualize anything</span>
                     </div>
                   </div>
                   <div className="items-center gap-4 flex w-full py-3 bg-vioet-400">
                     <div className="">
-                      <LightBulbIcon className="w-7 h-7" />
+                      <LightBulbIcon className="w-7 h-7 text-gray-900" />
                     </div>
                     <div>
                       <p className="text-lg text-black">Thinking </p>
-                      <span className="text-gray-500">
+                      <span className=" text-gray-900">
                         Think longer for better answers
                       </span>
                     </div>
@@ -100,11 +100,11 @@ function InputBox({
 
                   <div className="items-center gap-4 flex w-full py-3 bg-vioet-400">
                     <div className="">
-                      <BookOpenIcon className="w-7 h-7" />
+                      <BookOpenIcon className="w-7 h-7 text-gray-900" />
                     </div>
                     <div>
                       <p className="text-lg text-black">Study and learn</p>
-                      <span className="text-gray-500">Learn a new concept</span>
+                      <span className= "text-gray-900">Learn a new concept</span>
                     </div>
                   </div>
                 </div>
@@ -122,20 +122,20 @@ function InputBox({
           )}
 
           <div onClick={() => setOpenBox(!openbox)}>
-            <PlusIcon className="w-5 h-5" />
+            <PlusIcon className="w-5 h-5 text-white" />
           </div>
           <input
             value={input}
             onChange={handleCheck}
             className="
           
-            flex-1 text-lg outline-none border-none rounded-lg px-4 py-4 text-black text-sm font-normal "
+            flex-1 text-lg outline-none border-none rounded-lg px-4 py-4 text-white text-lg font-normal "
             placeholder="Ask Splinky"
             type="text"
           />
 
           <div className="flex gap-4 items-center">
-            <MicrophoneIcon className="w-5 h-5 text-gray-700" />
+            <MicrophoneIcon className="w-5 h-5 text-gray-700 text-white" />
             <motion.div
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}

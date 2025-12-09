@@ -44,7 +44,7 @@ function Chatwindow({
   const [showPopup, setShowPopup] = useState(true);
   return (
     <>
-      <div className="flex justify-center space-y-4 p-4 bg-yellw-400 h-full mt-5 ">
+      <div className="flex justify-center space-y-4 p-4 bg-gray-900 h-full mt-0 ">
         <div className="flex flex-col gap-10 items-center mb-55 justify-center md:mt-30 ">
           <motion.h2
             initial={{ opacity: 0 }}
@@ -95,7 +95,7 @@ function Chatwindow({
         }
       `}</style>
 
-          <div className="fixed bottom-0.5 left-0 pl-2 pr-2 w-full bg-rd-300 md:flex justify-center items-center md:relative">
+          <div className="fixed bottom-0.5 left-0 pl-2 pr-2 w-full bg-gray-900 md:flex justify-center items-center md:relative">
             <InputBox
               handleCheck={handleCheck}
               handleClick={handleClick}
@@ -116,20 +116,20 @@ function Chatwindow({
                 transition={{ duration: 1 }}
                 className="z-[1] absolute bottom-10 px-4 py-4 rounded- h-80 bg-viole-500 md:hidden"
               >
-                <div className="relative rounded-2xl bg-white px-9 py-6 shadow-[0_4px_24px_rgba(0,0,0,0.08)] bg">
+                <div className="relative rounded-2xl bg-gray-800 blur-40 px-9 py-6 shadow-[0_4px_24px_rgba(0,0,0,0.08)] bg">
                   <div
                     className="absolute right-4"
                     onClick={() => setShowPopup(!showPopup)}
                   >
-                    <XMarkIcon className="w-6 h-6 " />
+                    <XMarkIcon className="w-6 h-6 text-white" />
                   </div>
-                  <p className="text-[17px] font-small text-gray-700 leading-base">
+                  <p className="text-[16px] text-gray-500 leading-base">
                     You've hit the free plan limit for SPLINKY-1. Responses will
                     use another model until your limit resets in 1 hour,or get
                     splinKY Pro.
                   </p>
                   <Link to="/premium">
-                    <button className="shadow-sm font-medium active:scale-[0.98] transition mt-6 px-12 text-lg  rounded-full w-full py-3 bg-blue-100 text-blue-500">
+                    <button className="shadow-sm font-medium active:scale-[0.98] transition mt-6 px-12 text-lg  rounded-full w-full py-3 bg-violet-800 text-white">
                       Upgrade to Pro
                     </button>
                   </Link>

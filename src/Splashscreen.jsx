@@ -14,7 +14,7 @@ function Splashscreen({ onFinish }) {
     <AnimatePresence>
       {show && (
         <motion.div
-          className="w-full h-screen bg-white flex flex-col justify-center items-center relative overflow-hidden"
+          className="w-full h-screen bg-gray-900 flex flex-col justify-center items-center relative overflow-hidden"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}

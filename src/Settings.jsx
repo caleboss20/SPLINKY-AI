@@ -18,6 +18,7 @@ import {
   PencilIcon,
   ArrowLeftIcon,
   CameraIcon,
+
 } from "@heroicons/react/24/outline";
 function Settings() {
   const [on, setOn] = useState(false);
@@ -149,7 +150,7 @@ function Settings() {
 
       <div
         className={`w-full p-4 pb-30 md:w-1/3 ${
-          changebackground ? "bg-black text-white " : "bg-white"
+          changebackground ? "bg-white text-black " : "bg-gray-900 text-white"
         }`}
       >
         <div>
@@ -184,14 +185,14 @@ function Settings() {
             </div>
 
             <div className="flex flex-col items-center">
-              <h2 className="font-medium text-lg">{editedName}</h2>
-              <span className=" text-normal text-gray-700">{editedEmail}</span>
+              <h2 className="font-medium text-2xl">{editedName}</h2>
+              <span className=" text-normal text-gray-400 mt-2">{editedEmail}</span>
             </div>
           </div>
 
           <Link to="/premium">
             <div className="mt-15 bg-re-500">
-              <p className="text-xl font-medium text-gray-700">Subscription</p>
+              <p className="text-xl font-medium text-gray-400">Subscription</p>
               <div className="flex gap-9 mt-8">
                 <div className="w-15 h-15 bg-gray-200 rounded-full flex items-center justify-center">
                   <BoltIcon className="w-7 h-7 text-gray-400 " />
@@ -219,7 +220,7 @@ function Settings() {
       `}</style>
                   </h2>
 
-                  <span className="text-gray-700 text-lg">
+                  <span className="text-gray-400 text-lg">
                     Unlock advanced features
                   </span>
                 </div>
@@ -228,7 +229,7 @@ function Settings() {
           </Link>
 
           <div className="mt-20">
-            <p className="text-xl font-medium text-gray-700">Appearance</p>
+            <p className="text-xl font-medium text-gray-400">Appearance</p>
             <div className="flex gap-9 mt-8">
               <div className="flex-1 bg-gree-400 flex gap-7">
                 <div className="flex flex-col flex-1 h-22 gap-1">
@@ -246,7 +247,7 @@ function Settings() {
                 </div>
 
                 <div
-                  onClick={() => setchangebackground(true)}
+                  onClick={() => setchangebackground(false)}
                   className="flex flex-col flex-1 h-22 gap-1"
                 >
                   <div className="flex justify-center items-center flex-1 h-15 bg-gra-400 border-1 border-gray-300 rounded-xl">
@@ -256,7 +257,7 @@ function Settings() {
                 </div>
 
                 <div
-                  onClick={() => setchangebackground(false)}
+                  onClick={() => setchangebackground(true)}
                   className="flex flex-col flex-1 h-22 gap-1"
                 >
                   <div className="flex justify-center items-center flex-1 h-15 bg-gra-400 border-1 border-gray-300 rounded-xl">
@@ -269,12 +270,12 @@ function Settings() {
           </div>
 
           <div className="mt-20">
-            <p className="text-xl font-medium text-gray-700 mb-4">
+            <p className="text-xl font-medium text-gray-400 mb-4">
               AI Data Retention
             </p>
             <div className="flex gap-6 items-center">
               <div className="flex-1">
-                <span className="text-gray-600 text-lg">
+                <span className="text-gray-400 text-lg">
                   AI Data Retention allows SplinkyAI to use searches to improve
                   AI models.Turn this setting off if you wish to exclude your
                   data from this process.
@@ -299,33 +300,33 @@ function Settings() {
               </div>
             </div>
 
-            <p className="mt-15 text-xl font-medium text-gray-700 mt-10">
+            <p className="mt-15 text-xl font-medium text-gray-400 mt-10">
               Data & Information
             </p>
 
             <div className="mt-10 flex flex-col gap-3">
               <div className="w-full flex h-15 flex gap-9">
                 <LockClosedIcon className="w-8 h-8" />
-                <span className="text-xl font-medium text-gray-700">
+                <span className="text-xl font-medium text-gray-500">
                   Data Control
                 </span>
               </div>
 
               <div className="w-full flex h-15 flex gap-9">
                 <KeyIcon className="w-8 h-8" />
-                <span className="text-xl font-medium  text-gray-700">
+                <span className="text-xl font-medium  text-gray-500">
                   Access Control
                 </span>
               </div>
               <div className="w-full flex h-15 flex gap-9">
                 <ShieldCheckIcon className="w-8 h-8" />
-                <span className="text-xl font-medium  text-gray-700">
+                <span className="text-xl font-medium  text-gray-500">
                   Privacy
                 </span>
               </div>
               <div className="w-full flex h-15 flex gap-9">
                 <LinkIcon className="w-8 h-8" />
-                <span className="text-xl font-medium  text-gray-700">
+                <span className="text-xl font-medium  text-gray-500">
                   Shared Links
                 </span>
               </div>
@@ -334,7 +335,7 @@ function Settings() {
             <div className="flex flex-col mt-15">
               <div className="w-full flex h-15 flex gap-9">
                 <FlagIcon className="w-8 h-8" />
-                <span className="text-xl font-medium text-gray-700">
+                <span className="text-xl font-medium text-gray-500">
                   Report Issue
                 </span>
               </div>

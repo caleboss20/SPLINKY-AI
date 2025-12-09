@@ -55,10 +55,10 @@ function PremiumPage() {
   return (
     <>
       <div className="flex flex-col md:p-10">
-        <div className="z-100 pb-35 p-6 w-full bg-white flex flex-col md:">
+        <div className="z-100 pb-35 p-6 w-full bg-gray-900 flex flex-col md:">
           <Link to="/">
             <div className="md:hidden">
-              <ArrowLeftIcon className="w-6 h-6 " />
+              <ArrowLeftIcon className="w-6 h-6 text-white " />
             </div>
           </Link>
 
@@ -68,7 +68,7 @@ function PremiumPage() {
               animate={{ opacity: 1 }}
               transition={{ duration: 1.5 }}
               className="
-         text-4xl font-medium mb-2"
+         text-4xl font-medium mb-2 text-gray-300"
             >
               SPLINKY
               <span
@@ -91,7 +91,7 @@ function PremiumPage() {
         }
       `}</style>
 
-            <p className="text-gray-700 mt-4">
+            <p className="text-gray-400 mt-4">
               Get more access with advanced intelligence and agents
             </p>
 
@@ -101,20 +101,20 @@ function PremiumPage() {
                 className="flex flex-col py-4 bg-rd-500 mt-2 mr-2"
               >
                 <div className="flex justify-between">
-                  <h2 className="text-gray-700 font-medium">
+                  <h2 className="text-gray-400 font-medium">
                     {detail.features}
                   </h2>
                   <div className="flex gap-6">
-                    <h2 className="text-gray-700 font-medium">
+                    <h2 className="text-gray-400 font-medium">
                       {detail.minus ? (
                         <MinusIcon className="w-5 h-5" />
                       ) : (
                         detail.category
                       )}
                     </h2>
-                    <h2 className=" text-blue-500 font-medium">
+                    <h2 className=" text-violet-500 font-medium">
                       {detail.check ? (
-                        <CheckIcon className="w-5 h-5" />
+                        <CheckIcon className="w-5 h-5 " />
                       ) : (
                         detail.upgrade
                       )}
@@ -125,14 +125,14 @@ function PremiumPage() {
             ))}
 
             <div className=" mt-8 flex flex-col items-center">
-              <p className="font-medium">Restore subscription</p>
+              <p className="font-medium text-gray-400">Restore subscription</p>
               <button
                 onClick={() => setpaymentpop(!paymentpop)}
-                className="mb-2 shadow- font-semibold mt-6 px-12 text-lg  rounded-full w-full py-4 bg-black text-white"
+                className="mb-2 shadow- font-semibold mt-6 px-12 text-lg  rounded-full w-full py-4 bg-violet-900 text-white"
               >
                 Upgrade to Pro
               </button>
-              <p className="text-center mt-3 text-gray-700">
+              <p className="text-center mt-3 text-gray-500">
                 Renews for GH₵ 300.00/month. Cancel anytime.
               </p>
             </div>

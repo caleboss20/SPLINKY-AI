@@ -55,7 +55,7 @@ function PremiumPage() {
   return (
     <>
       <div className="flex flex-col md:p-10">
-        <div className="z-100 p-6 w-full bg-white flex flex-col md:">
+        <div className="z-100 pb-35 p-6 w-full bg-white flex flex-col md:">
           <Link to="/">
             <div className="md:hidden">
               <ArrowLeftIcon className="w-6 h-6 " />

@@ -17,36 +17,43 @@ import {
   ArrowRightEndOnRectangleIcon,
   PencilIcon,
   ArrowLeftIcon,
-  CameraIcon
+  CameraIcon,
 } from "@heroicons/react/24/outline";
 function Settings() {
   const [on, setOn] = useState(false);
   const [changebackground, setchangebackground] = useState(false);
   const [systemcolor, setsystemcolor] = useState(false);
   const [profilePopup, setprofilePopup] = useState(false);
-  
-  const [profilename,setprofileName]=useState("Caleb Antwi");
-  const [editedName,setEditedName]=useState("");
-    const [profileEmail,setprofileEmail]=useState("mrrcaleb@gmail.com");
-  const [editedEmail,seteditedEmail]=useState("");
-  
 
-  const editName=(e)=>{
+  const [image, setImage] = useState(() => {
+    return localStorage.getItem("image") || null;
+  });
+  const [editedName, setEditedName] = useState(() => {
+    return localStorage.getItem("editedName") || "caleboss";
+  });
+  const [editedEmail, seteditedEmail] = useState(() => {
+    return localStorage.getItem("editedEmail") || "caleb2@gmail.com";
+  });
+
+  const editName = (e) => {
     setEditedName(e.target.value);
     console.log(editedName);
-  }
-  
-  const editEmail=(e)=>{
+  };
+
+  const editEmail = (e) => {
     seteditedEmail(e.target.value);
     console.log(editedEmail);
-  }
-  const saveEdit=()=>{
-   setprofileName(editedName);
-   setprofileEmail(editedEmail);
-  
-  }
+  };
 
+  const saveEdit = () => {
+    if (image) {
+      localStorage.setItem("image", image);
+    }
 
+    localStorage.setItem("editedEmail", editedEmail);
+    localStorage.setItem("editedName", editedName);
+    setprofilePopup(false);
+  };
 
   return (
     <>
@@ -60,36 +67,73 @@ function Settings() {
             </div>
             {/**profile section */}
             <div className="mt-8 w-full flex justify-center items-center">
-             <div className="relative w-25 rounded-full h-25 bg-violet-400 flex justify-center items-center">
-              <span className="font-bold text-4xl text-white">C</span>
-             <div className=" w-6 h-7 rounded-full bg-white absolute right-1 bottom-0">
-              <CameraIcon className="w-6 h-6"/>
-             </div>
-             </div>
-             
+              <input
+                type="file"
+                accept="image/*"
+                id="fileInput"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (file) {
+                    setImage(URL.createObjectURL(file));
+                  }
+                }}
+              />
+
+              <div
+                onClick={() => document.getElementById("fileInput").click()}
+                className={`${
+                  !image
+                    ? "relative w-25 rounded-full h-25 bg-violet-400 flex justify-center items-center"
+                    : ""
+                }`}
+              >
+                {image ? (
+                  <img src={image} className="w-25 h-25 rounded-full" />
+                ) : null}
+                <span className="font-bold text-4xl text-white">C</span>
+                {image ? null : (
+                  <div className=" w-6 h-7 rounded-full bg-white absolute right-1 bottom-0">
+                    <CameraIcon className="w-6 h-6" />
+                  </div>
+                )}
+              </div>
             </div>
             <div className="p-4 mt-3">
               <form action="">
-                 <div className="flex flex-col gap-5">
+                <div className="flex flex-col gap-5">
                   <input
-                  name={editedName}
-                  onChange={editName}
-                   type="text"placeholder="Full name" className="pl-5 border-1 border-gray-700 rounded-2xl w-full h-13" />
-                   <input 
-                   onChange={editEmail}
-                   type="text"placeholder="Email" className="pl-5 border-1 border-gray-700 rounded-2xl w-full h-13" />
-                 </div>
+                    name={editedName}
+                    onChange={editName}
+                    type="text"
+                    placeholder="Full name"
+                    className="pl-5 border-1 border-gray-700 rounded-2xl w-full h-13"
+                  />
+                  <input
+                    onChange={editEmail}
+                    type="text"
+                    placeholder="Email"
+                    className="pl-5 border-1 border-gray-700 rounded-2xl w-full h-13"
+                  />
+                </div>
               </form>
-              <p className="text-center text-gray-600 mt-4">Your profile helps people recognize you.</p>
+              <p className="text-center text-gray-600 mt-4">
+                Your profile helps people recognize you.
+              </p>
               <div className="flex justify-center">
-                  <button 
+                <button
                   onClick={saveEdit}
-                  className="py-3 px-6 text-md bg-black text-white rounded-full mt-6">Save Profile</button>
+                  className="py-3 px-6 text-md bg-gray-800 text-white rounded-full mt-6"
+                >
+                  Save Profile
+                </button>
               </div>
               <p
-              onClick={()=>setprofilePopup(false)}
-               className="text-center mt-5 font-medium text-gray-700">Cancel</p>
-            
+                onClick={() => setprofilePopup(false)}
+                className="text-center mt-5 font-medium text-gray-700"
+              >
+                Cancel
+              </p>
             </div>
           </div>
           <motion.div
@@ -104,8 +148,8 @@ function Settings() {
       )}
 
       <div
-        className={`w-full h-full bg-re-400 p-4 ${
-          changebackground ? "bg-black text-white" : "bg-white"
+        className={`w-full p-4 pb-30 md:w-1/3 ${
+          changebackground ? "bg-black text-white " : "bg-white"
         }`}
       >
         <div>
@@ -125,17 +169,23 @@ function Settings() {
               onClick={() => setprofilePopup(!profilePopup)}
               className="relative rounded-full h-25 w-25 bg-violet-400 flex justify-center"
             >
-              <span className="text-6xl text-white mt-3">c</span>
-              <div className="p-1.5 rounded-full absolute  right-1 bottom-0 bg-white shadow-xl">
-                <PencilIcon className="text-gray-600 w-5 h-5 " />
-              </div>
+              {image ? (
+                <>
+                  <img src={image} className="w-full h-full rounded-full" />
+                  <div className="p-1.5 rounded-full absolute  right-1 bottom-0 bg-white shadow-xl">
+                    <PencilIcon className="text-gray-600 w-5 h-5 " />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <span className="text-6xl text-white mt-3">c</span>
+                </>
+              )}
             </div>
 
             <div className="flex flex-col items-center">
-              <h2 className="font-medium text-lg">{profilename}</h2>
-              <span className=" text-normal text-gray-700">
-              {profileEmail}
-              </span>
+              <h2 className="font-medium text-lg">{editedName}</h2>
+              <span className=" text-normal text-gray-700">{editedEmail}</span>
             </div>
           </div>
 
@@ -219,7 +269,7 @@ function Settings() {
           </div>
 
           <div className="mt-20">
-            <p className="text-xl font-medium text-gray-700">
+            <p className="text-xl font-medium text-gray-700 mb-4">
               AI Data Retention
             </p>
             <div className="flex gap-6 items-center">

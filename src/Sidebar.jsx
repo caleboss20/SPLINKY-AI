@@ -14,22 +14,19 @@ function Sidebar({
   setSelectedChatId,
   selectedChatId,
   setShowChatPage,
-  setDarkmode,
-  darkMode,
   changeIconTop,
   setIconchange,
   iconchange,
-  showChatPage
+  showChatPage,
+  darkMode,
+ 
 }) {
   const [searchItem, setSearchItem] = useState("");
   const handleSearch = (e) => setSearchItem(e.target.value);
   const filteredChats = chats.filter((chat) =>
     chat.title.toLowerCase().includes(searchItem.trim().toLowerCase())
   );
-  const toggleDark = () => {
-    setDarkmode(!darkMode);
-    document.documentElement.classList.toggle("dark");
-  };
+ 
   return (
     <div className="relative flex flex-col pt-4 pl-3 gap-8 overflow-y-auto md:h-220">
       <div className="flex justify-between items-center pr-3">
@@ -53,7 +50,7 @@ function Sidebar({
           </div>
           <BoltIcon className="w-6 h-6 text-black dark:text-white hidden md:flex" />
         </div>
-        <div onClick={toggleDark} className="mr-2 cursor-pointer">
+        <div className="mr-2 cursor-pointer">
           {darkMode ? (
             <SunIcon className="w-5 h-5 text-yellow-400" />
           ) : (
@@ -92,6 +89,7 @@ function Sidebar({
           </div>
         ))}
       </div>
+      <div className=" h-20 bg-re-500 fixed bottom-0 left-0 w-78 md:w-64"></div>
     </div>
   );
 }

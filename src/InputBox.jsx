@@ -30,7 +30,7 @@ function InputBox({
       <div className="relative w-full bg-re-500 pt-16">
         <div className="bg-re-300 flex border gap-2 h-15 border-gray-300 pl-4 py-0 pr-8 rounded-full shadow-md md:w-140 border border-gray-300 pl-4 py-0 pr-2 rounded-full shadow-md md:flex items-center">
           {selectedImage && (
-            <div className="absolute top-0 w-26 h-14 rounded-lg bg-gay-500">
+            <div className="absolute top-0 w-26 h-14 rounded-lg bg-y-500">
               <img
                 src={selectedImage}
                 className="relative rounded-lg object-cover h-14 w-full"
@@ -129,7 +129,7 @@ function InputBox({
             onChange={handleCheck}
             className="
           
-            flex-1 text-lg outline-none border-none rounded-lg px-4 py-4 text-black text-sm font-normal"
+            flex-1 text-lg outline-none border-none rounded-lg px-4 py-4 text-black text-sm font-normal "
             placeholder="Ask Splinky"
             type="text"
           />

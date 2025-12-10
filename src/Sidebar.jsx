@@ -48,13 +48,13 @@ function Sidebar({
               className="border-none outline-none px-7 py-3 flex-1 w-full rounded-full bg-gray-00 text-gray-300 text-lg dark:bg-gray-700 dark:text-white"
             />
           </div>
-          <BoltIcon className="w-6 h-6 text-black dark:text-white hidden md:flex" />
+          <BoltIcon className="w-6 h-6 text-black dark:text-white hidden md:flex text-gray-300" />
         </div>
-        <div className="mr-2 cursor-pointer">
+        <div className="mr-2 cursor-pointer md:mr-0 ">
           {darkMode ? (
-            <SunIcon className="w-5 h-5 text-yellow-400" />
+            <MoonIcon className="w-5 h-5 text-yellow-400 md:text-gray-300" />
           ) : (
-            <MoonIcon className="w-5 h-5 text-gray-800" />
+            <SunIcon className="w-5 h-5 text-gray-400 md:text-gray-300" />
           )}
         </div>
       </div>

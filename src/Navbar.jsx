@@ -27,7 +27,7 @@ function Navbar({toggleSidebar}) {
       </div>
 
       <div className="ml-2 flex justify-center items-center gap-1 hidden md:flex ">
-        <h2 className="text-xl">SplinKI</h2>
+        <h2 className="text-xl md:text-gray-300">SplinKI</h2>
         <ChevronDownIcon className="w-4 h-4 text-gray-400 " />
       </div>
         <Link to="/premium">

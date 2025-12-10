@@ -28,7 +28,7 @@ function InputBox({
   return (
     <>
       <div className="relative w-full pt-16">
-        <div className=" flex border gap-2 h-15 border-gray-300 pl-4 py-0 pr-8 rounded-full shadow-md md:w-140 border border-gray-300 pl-4 py-0 pr-2 rounded-full shadow-md md:flex items-center">
+        <div className=" flex border gap-0 h-15 border-gray-300 pl-4 py-0 pr-8 rounded-full shadow-md md:w-140 border border-gray-300 pl-4 py-0 pr-2 rounded-full shadow-md md:flex items-center">
           {selectedImage && (
             <div className="absolute top-0 w-26 h-14 rounded-lg bg-y-500">
               <img
@@ -37,7 +37,7 @@ function InputBox({
                 alt=""
               />
               <button onClick={() => setselectedImage(null)}>
-                <XMarkIcon className="absolute top-0 right-0 w-6 text-white h-6" />
+                <XMarkIcon className="absolute top-0 right-0 w-6 text-gray-900 h-6" />
               </button>
             </div>
           )}
@@ -104,7 +104,7 @@ function InputBox({
                     </div>
                     <div>
                       <p className="text-lg text-black">Study and learn</p>
-                      <span className= "text-gray-900">Learn a new concept</span>
+                      <span className="text-gray-900">Learn a new concept</span>
                     </div>
                   </div>
                 </div>
@@ -134,7 +134,7 @@ function InputBox({
             type="text"
           />
 
-          <div className="flex gap-4 items-center">
+          <div className="flex gap-4 items-center mr-25 md:mr-4">
             <MicrophoneIcon className="w-5 h-5 text-gray-700 text-white" />
             <motion.div
               whileHover={{ scale: 1.1 }}
@@ -157,8 +157,6 @@ function InputBox({
                   </div>
                 )}
               </div>
-            
-              
             </motion.div>
           </div>
         </div>

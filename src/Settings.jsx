@@ -149,7 +149,7 @@ function Settings() {
       )}
 
       <div
-        className={`w-full p-4 pb-30 md:w-1/3 ${
+        className={`w-full p-4 pb-4 md:w-1/3 ${
           changebackground ? "bg-white text-black " : "bg-gray-900 text-white"
         }`}
       >

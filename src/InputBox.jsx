@@ -129,13 +129,14 @@ function InputBox({
             onChange={handleCheck}
             className="
           
-            flex-1 text-lg outline-none border-none rounded-lg px-4 py-4 text-white text-lg font-normal "
+             text-lg outline-none w-50 rounded-lg px-4 py-4 text-white text-lg font-normal "
             placeholder="Ask Splinky"
             type="text"
           />
 
-          <div className="flex gap-4 items-center mr-35 md:mr-4">
+          <div className="flex-1 flex gap-2 items-center mr-35 md:mr-4">
             {/* */}
+            <MicrophoneIcon className="w-5 h-5 text-gray-700 text-white" />
             <motion.div
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
@@ -158,7 +159,7 @@ function InputBox({
                 )}
               </div>
             </motion.div>
-            <MicrophoneIcon className="w-5 h-5 text-gray-700 text-white" />
+            
           </div>
         </div>
       </div>

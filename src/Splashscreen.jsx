@@ -58,12 +58,12 @@ function Splashscreen({ onFinish }) {
             </motion.h2>
           </div>
           {/* Subtle shimmer overlay */}
-          <motion.div
+          {/* <motion.div
             className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/20 to-white/10"
             initial={{ x: "-100%" }}
             animate={{ x: "100%" }}
             transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
-          />
+          /> */}
         </motion.div>
       )}
     </AnimatePresence>

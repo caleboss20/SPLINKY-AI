@@ -28,7 +28,7 @@ function InputBox({
   return (
     <>
       <div className="relative w-full pt-16">
-        <div className=" flex border gap-0 h-15 border-gray-300 pl-4 py-0 pr-8 rounded-full shadow-md md:w-140 border border-gray-300 pl-4 py-0 pr-2 rounded-full shadow-md md:flex items-center">
+        <div className="flex border gap-0 h-15 border-gray-300 pl-4 py-0 pr-8 rounded-full shadow-md md:w-140 border border-gray-300 pl-4 py-0 pr-2 rounded-full shadow-md md:flex items-center">
           {selectedImage && (
             <div className="absolute top-0 w-26 h-14 rounded-lg bg-y-500">
               <img
@@ -135,7 +135,7 @@ function InputBox({
           />
 
           <div className="flex gap-4 items-center mr-25 md:mr-4">
-            <MicrophoneIcon className="w-5 h-5 text-gray-700 text-white" />
+            {/* */}
             <motion.div
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
@@ -158,6 +158,7 @@ function InputBox({
                 )}
               </div>
             </motion.div>
+            <MicrophoneIcon className="w-5 h-5 text-gray-700 text-white" />
           </div>
         </div>
       </div>

@@ -20,7 +20,8 @@ function Sidebar({
   iconchange,
   darkMode,
   handleNewChat,
-  deletechats
+  deletechats,
+
  
 }) {
   const [searchItem, setSearchItem] = useState("");

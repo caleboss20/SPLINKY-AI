@@ -59,6 +59,7 @@ function App() {
     setChats((prev)=>[addchat,...prev]);
     setSelectedChatId(addchat.id);
     setShowChatPage(true);
+    toggleSidebar(false);
   }
 
    //deleting all chats//
@@ -285,6 +286,7 @@ function App() {
                         iconchange={iconchange}
                         handleNewChat={handleNewChat}
                        deletechats={deletechats}
+                       
                       />
                     </motion.div>
                   </>

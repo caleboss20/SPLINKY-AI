@@ -134,7 +134,7 @@ function InputBox({
             type="text"
           />
 
-          <div className="flex gap-4 items-center mr-25 md:mr-4">
+          <div className="flex gap-4 items-center mr-35 md:mr-4">
             {/* */}
             <motion.div
               whileHover={{ scale: 1.1 }}

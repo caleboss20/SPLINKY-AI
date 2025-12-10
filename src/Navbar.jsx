@@ -36,9 +36,20 @@ function Navbar({toggleSidebar}) {
         <h2 className="hidden text-gray-700 md:flex text-violet-700 font-medium ">
           Upgrade to Go
         </h2>
-        <h2 className=" flex text-gray-400 md:hidden md:text-violet-700 font-medium">
-          Get Plus
+        <h2 className=" bg-gradient-to-r from-blue-400 via-pink-400 to-blue-500
+          bg-[length:400%_300%]
+          bg-clip-text text-transparent
+          animate-[gradientMove_3s_ease_infinite]
+          drop-shadow-[0_0_20px_rgba(255,0,255,0.6)] ml-2 flex text-gray-400 md:hidden md:text-violet-700 font-medium">
+          Get <span className="ml-1 ">Pro</span>
         </h2>
+          <style>{`
+        @keyframes gradientMove {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+      `}</style>
       </div>
         </Link>
       

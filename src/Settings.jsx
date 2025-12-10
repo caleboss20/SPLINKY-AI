@@ -18,7 +18,6 @@ import {
   PencilIcon,
   ArrowLeftIcon,
   CameraIcon,
-
 } from "@heroicons/react/24/outline";
 function Settings() {
   const [on, setOn] = useState(false);
@@ -186,7 +185,9 @@ function Settings() {
 
             <div className="flex flex-col items-center">
               <h2 className="font-medium text-2xl">{editedName}</h2>
-              <span className=" text-normal text-gray-400 mt-2">{editedEmail}</span>
+              <span className=" text-normal text-gray-400 mt-2">
+                {editedEmail}
+              </span>
             </div>
           </div>
 

@@ -23,7 +23,7 @@ function ChatPage({
      className="">
       <div 
       ref={scrollbarRef}
-      className="mt-5 flex flex-col justify-center space-y-4 p-4  h-full mb-30">
+      className="mt-5 flex flex-col justify-center space-y-4 p-4 mb-30">
         {selectedChat?.messages.map((item) => (
           <div
             key={item.id}
@@ -41,10 +41,10 @@ function ChatPage({
               <h2 className="text-xs font-semibold opacity-60 mb-1"></h2>
               {item.typing ? (
                  <div className=" px-4 py-2 rounded-lg w-20 flex items-center justify-center space-x-1">
-              {[0, 1, 2 , 3].map((i) => (
+              {[0, 1, 2,3].map((i) => (
                 <motion.span
                   key={i}
-                  className="bg-gray-600 rounded-full w-2 h-2"
+                  className="bg-gray-300 rounded-full w-2 h-2"
                   animate={{ y: [0, -3, 0,] }} // bounce up and down
                   transition={{
                     duration: 0.6,

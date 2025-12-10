@@ -29,11 +29,11 @@ function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const scrollbarRef = useRef(null);
   const [chats, setChats] = useState([
-    { id: crypto.randomUUID(), title: "React developer roadmap", messages: [] },
+    { id: crypto.randomUUID(), title: "", messages: [] },
 
-    { id: crypto.randomUUID(), title: "Best frontend skills", messages: [] },
+    { id: crypto.randomUUID(), title: "", messages: [] },
 
-    { id: crypto.randomUUID(), title: "Discussing Salary ", messages: [] },
+    { id: crypto.randomUUID(), title: "", messages: [] },
   ]);
   const [selectedChatId, setSelectedChatId] = useState(null);
   const [iconchange, setIconchange] = useState(false);
@@ -41,17 +41,43 @@ function App() {
   const selectedChat = chats.find((chat) => chat.id === selectedChatId);
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const changeIconTop = () => setIconchange(!iconchange);
+ 
   const handleCheck = (e) => {
     const value = e.target.value;
     setInput(value);
     setChangeIcon(value.trim() !== "");
   };
-  const handleClick = async () => {
-    if (!input.trim() && !selectedImage) return;
+
+
+  //handle a new chat clicked//
+  const handleNewChat=()=>{
+    const addchat={
+      id:crypto.randomUUID(),
+      title:"",
+      messages:[]
+    }
+    setChats((prev)=>[addchat,...prev]);
+    setSelectedChatId(addchat.id);
     setShowChatPage(true);
-    const userInput = input;
-    // Function to summarize message for title
-    const summarizeMessage = (text) => {
+  }
+
+   //deleting all chats//
+  const deletechats=()=>{
+    const copychat=[...chats];
+    copychat.splice(copychat,copychat.length);
+    setChats(copychat);
+    
+  }
+   
+ const handleClick = async () => {
+  // 1️⃣ Do nothing if no input and no image
+
+
+
+  if (!input.trim() && !selectedImage) return;
+
+
+ const summarizeMessage = (text) => {
       if (!text) return "New Chat";
       // Lowercase & remove punctuation
       const cleanText = text.toLowerCase().replace(/[^\w\s]/g, "");
@@ -99,92 +125,96 @@ function App() {
       // Capitalize first letter
       return summary.charAt(0).toUpperCase() + summary.slice(1);
     };
-    // Add user message and update title
-    setChats((prevChats) =>
-      prevChats.map((chat) =>
-        chat.id === selectedChatId
-          ? {
-              ...chat,
-              messages: [
-                ...chat.messages,
-                {
-                  id: crypto.randomUUID(),
-                  sender: "user",
-                  message: userInput,
-                  image: selectedImage || null,
-                  typing: false,
-                },
-              ],
-              title: summarizeMessage(userInput), // update title here
-            }
-          : chat
-      )
-    );
-    setInput("");
-    setselectedImage(null);
-    // Add typing indicator
-    setChats((prevChats) =>
-      prevChats.map((chat) =>
-        chat.id === selectedChatId
-          ? {
-              ...chat,
-              messages: [
-                ...chat.messages,
-                {
-                  id: "chatbot-typing",
-                  sender: "chatbot",
-                  message: "",
-                  typing: true,
-                },
-              ],
-            }
-          : chat
-      )
-    );
-    try {
-      const res = await axios.post("http://localhost:5000/api/chat", {
-        prompt: userInput,
-      });
-      const botResponse = {
-        id: crypto.randomUUID(),
-        sender: "chatbot",
-        message: res.data.reply,
-        typing: false,
-      };
-      // Replace typing indicator with response
-      setChats((prevChats) =>
-        prevChats.map((chat) =>
-          chat.id === selectedChatId
-            ? {
-                ...chat,
-                messages: chat.messages
-                  .filter((m) => m.id !== "chatbot-typing")
-                  .concat(botResponse),
-              }
-            : chat
-        )
-      );
-    } catch (err) {
-      console.log(err);
-      setChats((prevChats) =>
-        prevChats.map((chat) =>
-          chat.id === selectedChatId
-            ? {
-                ...chat,
-                messages: chat.messages
-                  .filter((m) => m.id !== "chatbot-typing")
-                  .concat({
-                    id: crypto.randomUUID(),
-                    sender: "chatbot",
-                    message: "Hi caleboss👋,how are you feeling today?",
-                    typing: false,
-                  }),
-              }
-            : chat
-        )
-      );
-    }
+
+
+
+
+  // 2️⃣ Ensure a chat exists
+
+
+  let chatId = selectedChatId;
+  if (!chatId) {
+    const newChat = {
+      id: crypto.randomUUID(),
+      title: "New Chat",
+      messages: []
+    };
+    setChats(prev => [newChat,...prev ]); // add to chats
+    setSelectedChatId(newChat.id);       // select it
+    chatId = newChat.id;                 // use immediately
+  }
+
+  // 3️⃣ Show the chat page
+  setShowChatPage(true);
+
+
+  // 4️⃣ Add user message
+  const userMessage = {
+    id: crypto.randomUUID(),
+    sender: "user",
+    message: input,
+    image: selectedImage || null,
+    typing: false
   };
+  setChats(prevChats =>
+    prevChats.map(chat =>
+      chat.id === chatId
+        ? {
+            ...chat,
+            messages: [...chat.messages, userMessage],
+            title: summarizeMessage(input) // optional: update title dynamically
+          }
+        : chat
+    )
+  );
+  // 5️⃣ Reset input & image
+  setInput("");
+  setselectedImage(null);
+  // 6️⃣ Add typing indicator for bot
+  setChats(prevChats =>
+    prevChats.map(chat =>
+      chat.id === chatId
+        ? {
+            ...chat,
+            messages: [...chat.messages, { id: "chatbot-typing", sender: "chatbot", message: "", typing: true }]
+          }
+        : chat
+    )
+  );
+  // 7️⃣ Call API to get bot response
+  try {
+    const res = await axios.post("http://localhost:5000/api/chat", { prompt: userMessage.message });
+    const botResponse = {
+      id: crypto.randomUUID(),
+      sender: "chatbot",
+      message: res.data.reply,
+      typing: false
+    };
+    // Replace typing indicator with actual response
+    setChats(prevChats =>
+      prevChats.map(chat =>
+        chat.id === chatId
+          ? { ...chat, messages: chat.messages.filter(m => m.id !== "chatbot-typing").concat(botResponse) }
+          : chat
+      )
+    );
+  } catch (err) {
+    console.log(err);
+    // fallback message if API fails
+    setChats(prevChats =>
+      prevChats.map(chat =>
+        chat.id === chatId
+          ? { ...chat, messages: chat.messages.filter(m => m.id !== "chatbot-typing").concat({
+              id: crypto.randomUUID(),
+              sender: "chatbot",
+              message: "Hi Caleb👋, how are you feeling today?",
+              typing: false
+            }) }
+          : chat
+      )
+    );
+  }
+};
 
   // Splashscreen
   const navigate=useNavigate();
@@ -213,6 +243,8 @@ function App() {
                   showChatPage={showChatPage}
                   sidebarOpen={sidebarOpen}
                   setSidebarOpen={setSidebarOpen}
+                   handleNewChat={handleNewChat}
+                   deletechats={deletechats}
                 />
               </aside>
               {/* Mobile sidebar */}
@@ -251,6 +283,8 @@ function App() {
                         changeIconTop={changeIconTop}
                         setIconchange={setIconchange}
                         iconchange={iconchange}
+                        handleNewChat={handleNewChat}
+                       deletechats={deletechats}
                       />
                     </motion.div>
                   </>

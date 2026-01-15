@@ -35,7 +35,7 @@ function ChatPage({
               className={`p-4 rounded-xl ${
                 item.sender === "user"
                   ? "text-black"
-                  : "bg-gray-700 text-white"
+                  : "bg-white text-white"
               }`}
             >
               <h2 className="text-xs font-semibold opacity-60 mb-1"></h2>
@@ -44,7 +44,7 @@ function ChatPage({
               {[0, 1, 2,3].map((i) => (
                 <motion.span
                   key={i}
-                  className="bg-gray-300 rounded-full w-2 h-2"
+                  className="bg-gray-400 rounded-full w-2 h-2"
                   animate={{ y: [0, -3, 0,] }} // bounce up and down
                   transition={{
                     duration: 0.6,
@@ -58,8 +58,8 @@ function ChatPage({
               ) : (
                 <>
                 {item.image &&
-                (<img src={item.image} className="w-70 h-90 rounded-xl"/>)}
-                {item.message? <span className={`text-sm text-gray-300 ${item.sender==="user"? "bg-gray-600 py-1 px-5 rounded-xl text-gray-300":null}`}>{item.message}</span> :null}
+                (<img src={item.image} className="w-50 h-50 rounded-xl"/>)}
+                {item.message? <span className={`text-sm text-gray-900 ${item.sender==="user"? "bg-gray-100 py-2 px-5 rounded-xl text-gray-900":null}`}>{item.message}</span> :null}
                
                 </>
               )}
@@ -69,7 +69,8 @@ function ChatPage({
 
         
       </div>
-      <div className="pb-2 fixed bottom-0 left-0 bg-gray-900 md:overflow-x-hidden pl-2 pr-2 left-0 md:left-105 fixed bottom-0 w-full bg-re-300">
+      {/*the div containing the input on chat page*/}
+      <div className="h-34 pb-2 fixed bottom-0 left-0 bg-white md:overflow-x-hidden pl-2 pr-2 left-0 md:left-105 fixed bottom-0 w-full bg-re-300">
         <InputBox
           handleCheck={handleCheck}
           handleClick={handleClick}

@@ -233,8 +233,9 @@ function App() {
         <Route
           path="/"
           element={
-            <div className="bg-gray-900 flex h-screen w-screen overflow-x-hidden overflow-y-auto">
+            <div className=" flex h-screen w-screen overflow-x-hidden overflow-y-auto">
               {/* Desktop sidebar */}
+
               <aside className=" hidden w-64 h-screen overflow-y-auto border-r border-gray-200  md:flex">
                 <Sidebar
                   chats={chats}
@@ -248,6 +249,7 @@ function App() {
                    deletechats={deletechats}
                 />
               </aside>
+
               {/* Mobile sidebar */}
               <AnimatePresence>
                 {sidebarOpen && (
@@ -263,7 +265,7 @@ function App() {
                     <motion.div
                       className={`fixed top-0 left-0 h-full ${
                         iconchange ? "w-full" : "w-78"
-                      } bg-gray-900 z-50 md:hidden`}
+                      } bg-white z-50 md:hidden`}
                       initial={{ x: "-40%" }}
                       animate={{ x: 0 }}
                       exit={{ x: "-100%" }}
@@ -294,11 +296,11 @@ function App() {
               </AnimatePresence>
               {/* Main content */}
               <div className="flex flex-col flex-1">
-                <header className="h-14 bg-gray-800 ">
+                <header className="h-14 bg-white ">
                   <Navbar toggleSidebar={toggleSidebar} />
                 </header>
                 <div className="flex flex-col flex-1">
-                  <main className="flex-1 overflow-y-auto bg-gray-900">
+                  <main className="flex-1 overflow-y-auto bg-white">
                     {showChatPage ? (
                       <ChatPage
                         scrollbarRef={scrollbarRef}

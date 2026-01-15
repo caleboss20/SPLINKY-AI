@@ -4,73 +4,117 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 function SignUp({ users, setUsers }) {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({ name: "", email: "", password: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
   const [error, setError] = useState("");
   const [isCreating, setIsCreating] = useState(false);
   const [creatingStep, setCreatingStep] = useState(0);
-  const steps = ["Creating your account...", "Preparing your dashboard...", "Almost done..."];
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const steps = [
+    "Creating your account...",
+    "Preparing your dashboard...",
+    "Almost done...",
+  ];
+  // -------------------------
+  // STRICT VALIDATION HELPERS
+  // -------------------------
+  const isValidEmail = (email) => {
+    // allow ONLY gmail.com for now
+    const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+    return gmailRegex.test(email);
   };
-  const handleSignUp = (e) => {
+  const getStoredUsers = () => {
+    const stored = localStorage.getItem("geni_users");
+    return stored ? JSON.parse(stored) : [];
+  };
+  const saveUserToStorage = (user) => {
+    const existingUsers = getStoredUsers();
+    localStorage.setItem(
+      "geni_users",
+      JSON.stringify([...existingUsers, user])
+    );
+  };
+  // -------------------------
+  // HANDLERS
+  // -------------------------
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+  const handleSignUp = async (e) => {
     e.preventDefault();
-    // Simple validation
-    if (!formData.name || !formData.email || !formData.password) {
+    const name = formData.name.trim();
+    const email = formData.email.trim().toLowerCase();
+    const password = formData.password;
+    // STRICT CLIENT VALIDATION
+    if (!name || !email || !password) {
       setError("All fields are required.");
       return;
     }
-    // Check if email already exists
-    if (users.find(user => user.email === formData.email)) {
+    if (!isValidEmail(email)) {
+      setError("Please use a valid gmail address.");
+      return;
+    }
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters.");
+      return;
+    }
+    const existingUsers = getStoredUsers();
+    const emailExists = existingUsers.some(
+      (user) => user.email === email
+    );
+    if (emailExists) {
       setError("Email is already registered.");
       return;
     }
-    // Clear error
+    // Passed all checks
     setError("");
-    // Push new user to lifted state
-    setUsers([...users, formData]);
-    // Show creating account overlay
     setIsCreating(true);
-    // Animate steps
+    setCreatingStep(0);
+    // Save user (mock backend)
+    const newUser = { name, email, password };
+    saveUserToStorage(newUser);
+    setUsers((prev) => [...prev, newUser]);
+    // Animate overlay steps
     let stepIndex = 0;
     const interval = setInterval(() => {
       setCreatingStep(stepIndex);
       stepIndex++;
       if (stepIndex >= steps.length) {
         clearInterval(interval);
-        setTimeout(() => {
-          navigate("/"); // Redirect to main page
-        }, 500);
+        setTimeout(() => navigate("/"), 500);
       }
     }, 1500);
   };
+  // -------------------------
+  // UI (UNCHANGED)
+  // -------------------------
   return (
     <>
-      <div className="w-full bg-gray-200 h-screen">
-        <div className="w-full bg-gray-900 p-6">
+      <div className="w-full bg-white">
+        <div className="w-full bg-white p-6">
           <div className="w-full">
             <Link to="/">
-            <h2 className="font-medium text-gray-400 absolute right-10 text-xl">Skip</h2>
+              <h2 className="font-medium text-gray-800 absolute right-10 text-md">
+                Skip
+              </h2>
             </Link>
-            
           </div>
-          <div className="flex flex-col justify-center mt-10">
+          <div className="flex flex-col justify-center mt-2">
             <form onSubmit={handleSignUp} className="mt-10">
               <motion.h2
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1.5 }}
                 className="
-                  text-center
-                  text-4xl font-medium mb-2
-                  bg-gradient-to-r from-blue-400 via-pink-400 to-blue-500
-                  bg-[length:300%_300%]
-                  bg-clip-text text-transparent
-                  animate-[gradientMove_4s_ease_infinite]
-                  drop-shadow-[0_0_20px_rgba(255,0,255,0.4)]
-                  ml-4 text-blue-600
+                text-center text-2xl font-medium mb-2 bg-gradient-to-r from-gray-800 via-black to-gray-500 bg-[length:300%_300%] bg-clip-text text-transparent animate-[gradientMove_4s_ease_infinite] drop-shadow-[0_0_20px_rgba(255,0,255,0.4)] ml-4 text-blue-600
                 "
               >
-                SplinkyAI
+                Geni AI
               </motion.h2>
               <style>{`
                 @keyframes gradientMove {
@@ -79,17 +123,17 @@ function SignUp({ users, setUsers }) {
                   100% { background-position: 0% 50%; }
                 }
               `}</style>
-              <div className="flex flex-col gap-6">
-                <p className="mt-10 font-medium text-3xl text-gray-400 text-center mb-10">
-                  Let's Create your account
-                </p>
+              <p className="mt-3 font-medium text-lg text-gray-700 text-center mb-10">
+                Let's create your account
+              </p>
+              <div className="flex flex-col gap-4.5">
                 <input
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
                   type="text"
                   placeholder="Full Name"
-                  className="border-gray-400 pl-10 rounded-full w-full h-15 border-1 text-white text-lg"
+                  className="border-gray-200 pl-5 rounded-full outline-none w-full py-3 border-1 text-black text-md"
                 />
                 <input
                   name="email"
@@ -97,7 +141,7 @@ function SignUp({ users, setUsers }) {
                   onChange={handleChange}
                   type="text"
                   placeholder="Email"
-                  className="border-gray-400 pl-10 rounded-full w-full h-15 border-1 text-white text-lg"
+                  className="border-gray-200 pl-5 rounded-full w-full py-3 outline-none border-1 text-black text-md"
                 />
                 <input
                   name="password"
@@ -105,42 +149,55 @@ function SignUp({ users, setUsers }) {
                   onChange={handleChange}
                   type="password"
                   placeholder="Password"
-                  className="text-white text-lg border-gray-400 pl-10 rounded-full w-full h-15 border-1"
+                  className="text-black text-md border-gray-200 pl-5 rounded-full outline-none w-full py-3 border-1"
                 />
-                {error && <p className="text-red-500 text-center">{error}</p>}
+                {error && (
+                  <p className="text-red-500 text-left ml-3 text-sm">
+                    {error}
+                  </p>
+                )}
                 <button
                   type="submit"
-                  className="w-full h-15 bg-gray-700 rounded-full mt-4 text-white font-medium text-xl
-                    bg-gradient-to-r from-violet-400 via-violet-700 to-blue-800 cursor-pointer"
+                  disabled={isCreating}
+                  className="w-full py-3 bg-gray-700 rounded-full mt-4 text-white font-medium text-md bg-gradient-to-r from-gray-800 via-black to-gray-800"
                 >
                   Sign up
                 </button>
                 <div className="flex items-center mb-4 mt-2">
                   <hr className="flex-1 border-gray-300" />
-                  <span className="px-2 text-gray-400 text-md">or</span>
+                  <span className="px-2 text-gray-400 text-sm">or</span>
                   <hr className="flex-1 border-gray-300" />
                 </div>
-                <div className="relative flex justify-center items-center w-full h-15 border-1 border-gray-500 rounded-full ">
-                  <FcGoogle className="w-6 h-6 mr-6" />
-                  <span className="font-medium text-xl text-gray-500">Sign up with Google</span>
+                <div className="relative flex justify-center items-center w-full py-3 border-1 border-gray-500 rounded-full ">
+                  <FcGoogle className="w-5 h-5 mr-6" />
+                  <span className="font-medium text-md text-gray-500">
+                    Sign up with Google
+                  </span>
                 </div>
-                <p className="text-center text-gray-500 text-lg mt-2">
+                <p className="text-center text-gray-500 text-md mt-0">
                   Already have an account?{" "}
                   <Link to="/login">
-                    <span className="text-gray-300 font-medium ml-2 text-center">Sign in</span>
+                    <span className="text-gray-900 font-medium ml-2 text-center">
+                      Sign in
+                    </span>
                   </Link>
                 </p>
-                <p className="text-center mt-4 text-gray-400 text-sm">
-                  By continuing, you agree to SplinkyAI's{" "}
-                  <span className="text-gray-200 font-small underline">Terms of Service</span> and{" "}
-                  <span className="text-gray-200 font-small underline"> Privacy Policy</span>
+                <p className="text-center mt-4 text-gray-900 text-[11px]">
+                  By continuing, you agree to GENI AI's{" "}
+                  <span className="text-gray-600 font-small underline">
+                    Terms of Service
+                  </span>{" "}
+                  and{" "}
+                  <span className="text-gray-600 font-small underline">
+                    Privacy Policy
+                  </span>
                 </p>
               </div>
             </form>
           </div>
         </div>
       </div>
-      {/* Overlay for creating account */}
+      {/* Overlay */}
       <AnimatePresence>
         {isCreating && (
           <motion.div
@@ -148,7 +205,7 @@ function SignUp({ users, setUsers }) {
             animate={{ opacity: 0.9 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1 }}
-            className="fixed inset-0 bg-gray-900 flex justify-center items-center backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-black/80 flex justify-center items-center backdrop-blur-sm z-50"
           >
             <motion.div
               key={creatingStep}
@@ -156,9 +213,10 @@ function SignUp({ users, setUsers }) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.7 }}
-              className="text-white text-2xl font-medium"
+              className="flex flex-col items-center gap-4 text-white text-2xl font-medium"
             >
-              {steps[creatingStep]}
+              <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <span className="text-sm">{steps[creatingStep]}</span>
             </motion.div>
           </motion.div>
         )}

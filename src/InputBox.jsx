@@ -28,7 +28,7 @@ function InputBox({
   return (
     <>
       <div className="relative w-full pt-16">
-        <div className="flex border gap-0 h-15 border-gray-300 pl-4 py-0 pr-8 rounded-full shadow-md md:w-140 border border-gray-300 pl-4 py-0 pr-2 rounded-full shadow-md md:flex items-center">
+        <div className="flex border gap-0 h-15 border-gray-300 pl-3 py-0 pr-8 rounded-full shadow-md md:w-140 border border-gray-300 pl-4 py-0 pr-2 rounded-full shadow-md md:flex items-center">
           {selectedImage && (
             <div className="absolute top-0 w-26 h-14 rounded-lg bg-y-500">
               <img
@@ -37,29 +37,29 @@ function InputBox({
                 alt=""
               />
               <button onClick={() => setselectedImage(null)}>
-                <XMarkIcon className="absolute top-0 right-0 w-6 text-gray-900 h-6" />
+                <XMarkIcon className="absolute top-0 right-0.5 w-5 text-white h-6" />
               </button>
             </div>
           )}
 
           {openbox && (
             <>
-              <div className=" z-[10000] p-6 fixed bottom-0 left-0 right-0 w-full h-[420px] bg-gray-700 rounded-lg ">
+              <div className=" z-[10000] p-6 fixed bottom-0 left-0 right-0 w-full h-[420px] bg-white rounded-lg ">
                 <div className="flex gap-5 ">
-                  <motion.div className="flex-col rounded-xl h-25 flex justify-center items-center flex-1 bg-gray-600">
+                  <motion.div className="flex-col rounded-xl h-22 flex justify-center items-center flex-1 bg-gray-100">
                     <CameraIcon className="w-8 h-8 text-gray-900" />
                     <span>Camera</span>
                   </motion.div>
 
                   <div
                     onClick={() => document.getElementById("fileInput").click()}
-                    className="flex-col rounded-xl h-25 flex justify-center items-center flex-1 bg-gray-600"
+                    className="flex-col rounded-xl h-22 flex justify-center items-center flex-1 bg-gray-100"
                   >
                     <input
                       type="file"
                       accept="image/*"
                       id="fileInput"
-                      className="hidden"
+                      className="hidden text-black"
                       onChange={(e) => {
                         const file = e.target.files[0];
                         if (file) {
@@ -70,7 +70,7 @@ function InputBox({
                     <PhotoIcon className="w-8 h-8 text-gray-900" />
                     <span>Photos</span>
                   </div>
-                  <div className="flex-col rounded-xl h-25 flex justify-center items-center flex-1 bg-gray-600">
+                  <div className="flex-col rounded-xl h-22 flex justify-center items-center flex-1 bg-gray-100">
                     <FolderIcon className="w-8 h-8 text-gray-900" />
                     <span>Files</span>
                   </div>
@@ -82,8 +82,10 @@ function InputBox({
                       <CubeIcon className="w-7 h-7 text-gray-900" />
                     </div>
                     <div>
-                      <p className="text-lg text-black">Create image</p>
-                      <span className=" text-gray-900">Visualize anything</span>
+                      <p className="text-md text-black">Create image</p>
+                      <span className=" text-gray-900 text-sm">
+                        Visualize anything
+                      </span>
                     </div>
                   </div>
                   <div className="items-center gap-4 flex w-full py-3 bg-vioet-400">
@@ -91,8 +93,8 @@ function InputBox({
                       <LightBulbIcon className="w-7 h-7 text-gray-900" />
                     </div>
                     <div>
-                      <p className="text-lg text-black">Thinking </p>
-                      <span className=" text-gray-900">
+                      <p className="text-md text-black">Thinking </p>
+                      <span className=" text-gray-900 text-sm">
                         Think longer for better answers
                       </span>
                     </div>
@@ -103,8 +105,10 @@ function InputBox({
                       <BookOpenIcon className="w-7 h-7 text-gray-900" />
                     </div>
                     <div>
-                      <p className="text-lg text-black">Study and learn</p>
-                      <span className="text-gray-900">Learn a new concept</span>
+                      <p className="text-md text-black">Study and learn</p>
+                      <span className="text-gray-900 text-sm">
+                        Learn a new concept
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -122,15 +126,15 @@ function InputBox({
           )}
 
           <div onClick={() => setOpenBox(!openbox)}>
-            <PlusIcon className="w-5 h-5 text-white" />
+            <PlusIcon className="w-5 h-5 text-black" />
           </div>
           <input
             value={input}
             onChange={handleCheck}
             className="
           
-             text-lg outline-none w-50 rounded-lg px-4 py-4 text-white text-lg font-normal "
-            placeholder="Ask Splinky"
+             text-md outline-none w-50 rounded-lg px-4 py-4 text-black text-lg font-normal "
+            placeholder="Ask Geni"
             type="text"
           />
 
@@ -146,7 +150,7 @@ function InputBox({
               {/* Animated glowing border */}
               <div className="absolute -inset-1 rounded-full animate-glow"></div>
               {/* Button background */}
-              <div className="relative h-full w-full bg-violet-600 rounded-full flex items-center justify-center">
+              <div className="relative h-full w-full bg-gray-800 rounded-full flex items-center justify-center">
                 {changeIcon ? (
                   <ArrowUpIcon className="w-4 h-4 text-white" />
                 ) : (
@@ -159,7 +163,6 @@ function InputBox({
                 )}
               </div>
             </motion.div>
-            
           </div>
         </div>
       </div>

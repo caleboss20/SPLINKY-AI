@@ -14,7 +14,7 @@ function Splashscreen({ onFinish }) {
     <AnimatePresence>
       {show && (
         <motion.div
-          className="w-full h-screen bg-gray-900 flex flex-col justify-center items-center relative overflow-hidden"
+          className="w-full h-screen  flex flex-col justify-center items-center relative overflow-hidden"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
@@ -22,7 +22,7 @@ function Splashscreen({ onFinish }) {
         >
           {/* Floating / glowing background circle */}
           <motion.div
-            className="absolute w-64 h-64 bg-pink-900/10 rounded-full"
+            className="absolute w-64 h-64 bg-gray-900/10 rounded-full"
             initial={{ scale: 0 }}
             animate={{ scale: 1.2, opacity: [0.3, 0.5, 0.3] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
@@ -38,13 +38,13 @@ function Splashscreen({ onFinish }) {
               <BoltIcon
                 className="w-20 h-20 
 
-              text-violet-500 md:w-30 h-30"
+              text-gray-700 md:w-30 h-30"
               />
             </motion.div>
             {/* Brand name animation */}
             <motion.h2
-              className="text-3xl font-small text-black tracking-wider
-               bg-gradient-to-r from-blue-400 via-pink-400 to-blue-500
+              className="text-3xl font-medium text-black tracking-wider
+               bg-gradient-to-r from-black via-gray-800 to-blue-500
           bg-[length:300%_300%]
           bg-clip-text text-transparent
           animate-[gradientMove_4s_ease_infinite]
@@ -54,7 +54,7 @@ function Splashscreen({ onFinish }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
             >
-              SplinKY
+              GENI
             </motion.h2>
           </div>
           {/* Subtle shimmer overlay */}

@@ -56,7 +56,7 @@ function Login() {
     const password = formData.password;
     // VALIDATION
     if (!email || !password) {
-      setError("Please enter both email and password.");
+      setError("Please enter your email and password.");
       return;
     }
     if (!isValidEmail(email)) {
@@ -164,7 +164,7 @@ function Login() {
                 </div>
                 <div className="relative flex justify-center items-center w-full py-3 border-1 border-gray-500 rounded-full">
                   <FcGoogle className="w-6 h-6 mr-6" />
-                  <span className="font-medium text-md text-gray-600">Sign in with Google</span>
+                  <span className="font-medium text-md text-gray-600">Continue with Google</span>
                 </div>
                 <p className="text-center text-gray-500 text-sm mt-2">
                   Don't have an account?{" "}

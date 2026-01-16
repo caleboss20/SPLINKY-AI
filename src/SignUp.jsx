@@ -64,9 +64,7 @@ function SignUp({ users, setUsers }) {
       return;
     }
     const existingUsers = getStoredUsers();
-    const emailExists = existingUsers.some(
-      (user) => user.email === email
-    );
+    const emailExists = existingUsers.some((user) => user.email === email);
     if (emailExists) {
       setError("Email is already registered.");
       return;
@@ -111,8 +109,13 @@ function SignUp({ users, setUsers }) {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1.5 }}
                 className="
-                text-center text-2xl font-medium mb-2 bg-gradient-to-r from-gray-800 via-black to-gray-500 bg-[length:300%_300%] bg-clip-text text-transparent animate-[gradientMove_4s_ease_infinite] drop-shadow-[0_0_20px_rgba(255,0,255,0.4)] ml-4 text-blue-600
-                "
+                text-center text-2xl font-medium mb-2 
+
+          bg-gradient-to-r from-blue-400 via-pink-400 to-blue-500
+          bg-[length:300%_300%]
+          bg-clip-text text-transparent
+          animate-[gradientMove_4s_ease_infinite]
+          drop-shadow-[0_0_20px_rgba(255,0,255,0.4)]"
               >
                 Geni AI
               </motion.h2>
@@ -152,9 +155,7 @@ function SignUp({ users, setUsers }) {
                   className="text-black text-md border-gray-200 pl-5 rounded-full outline-none w-full py-3 border-1"
                 />
                 {error && (
-                  <p className="text-red-500 text-left ml-3 text-sm">
-                    {error}
-                  </p>
+                  <p className="text-red-500 text-left ml-3 text-sm">{error}</p>
                 )}
                 <button
                   type="submit"
@@ -171,7 +172,7 @@ function SignUp({ users, setUsers }) {
                 <div className="relative flex justify-center items-center w-full py-3 border-1 border-gray-500 rounded-full ">
                   <FcGoogle className="w-5 h-5 mr-6" />
                   <span className="font-medium text-md text-gray-500">
-                    Sign up with Google
+                    Continue with Google
                   </span>
                 </div>
                 <p className="text-center text-gray-500 text-md mt-0">

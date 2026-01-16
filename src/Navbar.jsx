@@ -12,7 +12,8 @@ import {
   UserIcon,
   SparklesIcon,
   BoltIcon,
-  Cog6ToothIcon
+  Cog6ToothIcon,
+  BellIcon
 } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 
@@ -54,10 +55,14 @@ function Navbar({toggleSidebar}) {
         </Link>
       
 
-      <div className="bg-white shadow-md px-4 py-2 rounded-full flex gap-4 items-center md:flex shadow-none bg-none">
-        <UserIcon className="w-5 h-5 text-gray-700 md:w-4 h-4" />
+      <div className="bg-white shadow-md px-4 py-2 rounded-full flex gap-6 items-center md:flex shadow-none bg-none">
+       <div className="relative">
+         <BellIcon className="w-7 h-7 text-gray-700 md:w-4 h-4" />
+        <div className="top-0 right-0 absolute bg-red-600 rounded-full py-0 px-1 flex justify-center items-center text-white"><span className="font-bold text-[10px]">2</span></div>
+       </div>
+      
         <Link to="/settings">
-        <Cog6ToothIcon className="w-5 h-5 text-gray-700 md:w-4 h-4" />
+        <Cog6ToothIcon className="w-7 h-7 text-gray-700 md:w-4 h-4" />
         </Link>
       </div>
     </div>

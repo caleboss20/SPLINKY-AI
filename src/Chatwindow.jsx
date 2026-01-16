@@ -122,7 +122,7 @@ function Chatwindow({
                     <XMarkIcon className="w-4 h-4 text-gray-700 " />
                   </div>
                   <p className="text-[13px] text-gray-700 leading-base">
-                    You've hit the free plan limit for SPLINKY-1. Responses will
+                    You've hit the free plan limit for GENI-1. Responses will
                     use another model until your limit resets in 1 hour, or get
                     Splinky Pro.
                   </p>

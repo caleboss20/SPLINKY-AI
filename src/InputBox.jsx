@@ -140,7 +140,7 @@ function InputBox({
 
           <div className="flex-1 flex gap-6 items-center mr-35 md:mr-4">
             {/* */}
-            <MicrophoneIcon className="w-5 h-5 text-gray-700 text-white" />
+            <MicrophoneIcon className="w-5 h-5 text-gray-700 text-black" />
             <motion.div
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}

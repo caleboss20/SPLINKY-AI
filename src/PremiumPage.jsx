@@ -4,7 +4,6 @@ import { FaCreditCard, FaPaypal, FaMobileAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-
 import mtn from "./assets/Images/mtn.jpg";
 import mastercard from "./assets/Images/mastercard.jpg";
 import paypal from "./assets/Images/paypal.png";
@@ -12,7 +11,6 @@ import visa from "./assets/Images/visa.png";
 function PremiumPage() {
   const [paymentpop, setPaymentPop] = useState(false);
   const [scriptLoaded, setScriptLoaded] = useState(false);
-
   const [selectedMethod, setSelectedMethod] = useState(null);
   const [paybuttonload, setPaybuttonload] = useState(false);
   const [details, setDetails] = useState([
@@ -43,6 +41,7 @@ function PremiumPage() {
   const handleMoMoPayment = () => {
     if (!window.PaystackPop) {
       alert("Payment system is loading. Please try again in a moment.");
+      setPaybuttonload(false);
       return;
     }
     const handler = window.PaystackPop.setup({
@@ -52,23 +51,26 @@ function PremiumPage() {
       currency: "GHS",
       channels: ["mobile_money"],
       ref: `${Math.floor(Math.random() * 1000000000) + 1}`, // unique reference
-      onClose: () => alert("Payment cancelled"),
+      onClose: () => {
+        alert("Payment cancelled");
+        setPaybuttonload(false); // Reset button state on cancel
+      },
       callback: function (response) {
         alert("Payment successful! Ref: " + response.reference);
         // TODO: update user subscription in Firestore or local storage
+        setPaybuttonload(false); // Reset button state after success
+        setSelectedMethod(null); // Clear selection
+        togglePaymentPop(); // Close payment popup
       },
-      
     });
     handler.openIframe();
-    setPaybuttonload(true)
   };
-
   const [methods, setMethods] = useState([
     {
       type: "mobile_money",
       name: "Mobile money",
-      description: "Pay with Mastercard",
-      image: mastercard,
+      description: "Pay with Mobile money",
+      image: mtn,
     },
     {
       type: "visa",
@@ -83,13 +85,11 @@ function PremiumPage() {
       image: paypal,
     },
   ]);
-
-   const handlePayClick = () => {
+  const handlePayClick = () => {
     if (selectedMethod !== "mobile_money") return;
     setPaybuttonload(true);
     handleMoMoPayment();
   };
-
   return (
     <>
       <div className="flex flex-col md:p-10">
@@ -129,7 +129,6 @@ function PremiumPage() {
             <p className="text-gray-800 mt-4">
               Get more access with advanced intelligence and agents
             </p>
-
             <div className="flex flex-col">
               {details.map((detail, index) => (
                 <div
@@ -160,7 +159,6 @@ function PremiumPage() {
                 </div>
               ))}
             </div>
-
             <div className="mt-4 flex flex-col items-center">
               <p className="font-medium text-sm text-gray-600">
                 Restore subscription
@@ -175,9 +173,6 @@ function PremiumPage() {
                 Renews for GH₵ 300.00/month. Cancel anytime.
               </p>
             </div>
-
-          
-
             {paymentpop && (
               <>
                 <div
@@ -188,7 +183,7 @@ function PremiumPage() {
                   <div className="flex items-center justify-center">
                     <div className="w-10 h-1 bg-gray-300 rounded-xl"></div>
                   </div>
-                  <h2 className="font-medium text-lg p-6 mt-4">
+                  <h2 className="font-medium text-md p-6 mt-4">
                     Payment Method
                   </h2>
                   <div className="flex flex-col gap-6 pl-6 pr-6 mt-0">
@@ -202,60 +197,58 @@ function PremiumPage() {
                             isSelected
                               ? "border-1 border-green-500 bg-green-50"
                               : "border-1 border-transparent bg-white"
-                          } py-3 flex items-center justify-between rounded-xl bg-[#ffffff] w-full`}
+                          } px-4 py-3 flex items-center justify-between rounded-xl bg-[#ffffff] w-full`}
                         >
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-4">
                             <img
                               src={method.image}
-                              className="w-14 h-10"
+                              className="w-12 h-11"
                               alt=""
                             />
                             <div className="flex flex-col">
-                              <h2 className="font-medium text-md text-gray-800">
+                              <h2 className="font-medium text-sm text-gray-800">
                                 {method.name}
                               </h2>
-                              <span className="text-sm text-gray-700">
+                              <span className="text-[13px] text-gray-700">
                                 {method.description}
                               </span>
                             </div>
                           </div>
-
                           <div>
                             <input
                               onClick={() => setSelectedMethod(method.type)}
                               checked={isSelected}
                               type="checkbox"
-                              className="accent-green-600 w-4 h-4 mr-3"
+                              className="accent-green-600 w-3.5 h-3.5 mr-3"
                             />
                           </div>
                         </div>
                       );
                     })}
                   </div>
-
                   <div className="p-6 mt-3">
-                    
-                     <button
-                    onClick={handlePayClick}
-                    disabled={selectedMethod !== "mobile_money" || paybuttonload}
-                    className={`w-full py-4 rounded-xl text-white font-medium flex items-center justify-center
-                      ${
-                        selectedMethod === "mobile_money" && !paybuttonload
-                          ? "bg-green-700"
-                          : "bg-gray-200 cursor-not-allowed"
+                    <button
+                      onClick={handlePayClick}
+                      disabled={
+                        selectedMethod !== "mobile_money" || paybuttonload
                       }
-                    `}
-                  >
-                    {paybuttonload ? (
-                      <>
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                     <div className="ml-5">please wait...</div>
-                    </>
-                    ) : (
-                      "Pay GHS 300.00"
-                    )}
-                  </button>
-
+                      className={`w-full py-4 rounded-xl text-white font-medium flex items-center justify-center
+                        ${
+                          selectedMethod === "mobile_money" && !paybuttonload
+                            ? "bg-green-700"
+                            : "bg-gray-200 cursor-not-allowed"
+                        }
+                      `}
+                    >
+                      {paybuttonload ? (
+                        <>
+                          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          <div className="ml-5">Authorizing payment...</div>
+                        </>
+                      ) : (
+                        "Pay GHS 300.00"
+                      )}
+                    </button>
                   </div>
                 </div>
               </>

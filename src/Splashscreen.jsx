@@ -7,10 +7,11 @@ function Splashscreen({ onFinish }) {
     const timer = setTimeout(() => {
       setShow(false);
       if (onFinish) onFinish(); // call parent to hide splash
-    }, 4000); // 2.5s splash
+    }, 4000); 
     return () => clearTimeout(timer);
   }, [onFinish]);
   return (
+    <>
     <AnimatePresence>
       {show && (
         <motion.div
@@ -66,7 +67,12 @@ function Splashscreen({ onFinish }) {
           /> */}
         </motion.div>
       )}
+      
     </AnimatePresence>
+    <div className="fixed left-0 right-0 bottom-0 w-full h-20 flex justify-center">
+      <h2 className="font-medium text-lg text-gray-600">BY CALLYBOSS</h2>
+      </div>
+    </>
   );
 }
 export default Splashscreen;

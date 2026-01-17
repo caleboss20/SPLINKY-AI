@@ -124,7 +124,7 @@ function Chatwindow({
                   <p className="text-[13px] text-gray-700 leading-base">
                     You've hit the free plan limit for GENI-1. Responses will
                     use another model until your limit resets in 1 hour, or get
-                    Splinky Pro.
+                    GENI Pro.
                   </p>
                   <Link to="/premium">
                     <button className="shadow-sm font-medium active:scale-[0.98] transition mt-6 px-12 text-sm  rounded-full w-full py-3 bg-black text-white">

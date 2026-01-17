@@ -13,6 +13,7 @@ import axios from "axios";
 import Settings from "./Settings";
 import Login from "./Login";
 import SignUp from "./SignUp";
+import Notifications from "./Notifications";
 
 function App() {
   // Fake user array with Caleb
@@ -224,7 +225,7 @@ function App() {
      navigate("/login");
     return () => clearTimeout(timer);
   }, []);
-  // Dark mode
+  
 
   if (loading) return <Splashscreen />;
   return (
@@ -339,6 +340,7 @@ function App() {
         />
         <Route path="/premium" element={<PremiumPage />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/notifications" element={<Notifications/>} />
         <Route path="/login" element={<Login users={users} />} />
          <Route path="/signup" element={<SignUp users={users} setUsers={setUsers}/>} />
       </Routes>

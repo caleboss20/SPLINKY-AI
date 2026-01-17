@@ -15,9 +15,10 @@ import {
   Cog6ToothIcon,
   BellIcon
 } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 function Navbar({toggleSidebar}) {
+  const navigate=useNavigate();
   return (
     <div className="pl-2 pr-2 pb-3 mt-2 justify-between flex items-center h-full ">
       <div
@@ -56,13 +57,15 @@ function Navbar({toggleSidebar}) {
       
 
       <div className="bg-white shadow-md px-4 py-2 rounded-full flex gap-6 items-center md:flex shadow-none bg-none">
-       <div className="relative">
-         <BellIcon className="w-7 h-7 text-gray-700 md:w-4 h-4" />
+       <div
+       onClick={()=>navigate("/notifications")}
+        className="relative">
+         <BellIcon className="w-6.5 h-6.5 text-gray-700 md:w-4 h-4" />
         <div className="top-0 right-0 absolute bg-red-600 rounded-full py-0 px-1 flex justify-center items-center text-white"><span className="font-bold text-[10px]">2</span></div>
        </div>
       
         <Link to="/settings">
-        <Cog6ToothIcon className="w-7 h-7 text-gray-700 md:w-4 h-4" />
+        <Cog6ToothIcon className="w-6.5 h-6.5 text-gray-700 md:w-4 h-4" />
         </Link>
       </div>
     </div>

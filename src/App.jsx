@@ -189,7 +189,7 @@ function App() {
     const botResponse = {
       id: crypto.randomUUID(),
       sender: "chatbot",
-      message: res.data.reply,
+      message: "ffff",
       typing: false
     };
     // Replace typing indicator with actual response
@@ -209,7 +209,7 @@ function App() {
           ? { ...chat, messages: chat.messages.filter(m => m.id !== "chatbot-typing").concat({
               id: crypto.randomUUID(),
               sender: "chatbot",
-              message: "Hi Caleb👋, how are you feeling today?",
+              message: "error fetching...",
               typing: false
             }) }
           : chat
@@ -229,7 +229,11 @@ function App() {
 
   if (loading) return <Splashscreen />;
   return (
-    <div className="w-full  ">
+    <>
+
+    
+    
+    <div className=" "> 
       <Routes>
         <Route
           path="/"
@@ -345,6 +349,9 @@ function App() {
          <Route path="/signup" element={<SignUp users={users} setUsers={setUsers}/>} />
       </Routes>
     </div>
+    
+    </>
+
   );
 }
 export default App;

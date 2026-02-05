@@ -7,13 +7,15 @@ import { useEffect, useRef, useState } from "react";
 import Splashscreen from "./Splashscreen";
 import ChatPage from "./ChatPage";
 import { motion, AnimatePresence } from "framer-motion";
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { data, Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import PremiumPage from "./PremiumPage";
 import axios from "axios";
 import Settings from "./Settings";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import Notifications from "./Notifications";
+import ReactMarkdown from 'react-markdown';
+
 
 function App() {
   // Fake user array with Caleb
@@ -185,14 +187,16 @@ function App() {
   );
   // 7️⃣ Call API to get bot response
   try {
-    const res = await axios.post("http://localhost:5000/api/chat", { prompt: userMessage.message });
+    const res = await axios.post("http://localhost:5000/api/chat",  {prompt: userMessage.message} );
+    console.log(res)
     const botResponse = {
       id: crypto.randomUUID(),
       sender: "chatbot",
-      message: "ffff",
+      message: res.data.reply,
       typing: false
     };
     // Replace typing indicator with actual response
+  
     setChats(prevChats =>
       prevChats.map(chat =>
         chat.id === chatId

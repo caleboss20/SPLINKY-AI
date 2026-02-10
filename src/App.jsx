@@ -14,6 +14,7 @@ import Settings from "./Settings";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import Notifications from "./Notifications";
+import Terms from "./Terms";
 
 function App() {
   // Fake user array with Caleb
@@ -344,6 +345,7 @@ function App() {
         />
         <Route path="/premium" element={<PremiumPage />} />
         <Route path="/settings" element={<Settings />} />
+          <Route path="/terms" element={<Terms />} />
         <Route path="/notifications" element={<Notifications/>} />
         <Route path="/login" element={<Login users={users} />} />
          <Route path="/signup" element={<SignUp users={users} setUsers={setUsers}/>} />

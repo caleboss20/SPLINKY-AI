@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { LockClosedIcon } from "@heroicons/react/24/outline";
 
 // 🔐 AUTH
-// import { signInWithGoogle } from "./Config/Auth";
+// import { signInWithGoogle } from "./Auth.js";
 
 
 // adjust path if needed
@@ -220,9 +220,11 @@ function Login() {
 
                     <p className="p-5 text-center mt-4 text-gray-900 text-[11px]">
                       By continuing, you agree to GENI AI's{" "}
+                     <Link to="/terms">
                       <span className="text-gray-600 underline">
                         Terms of Service
                       </span>{" "}
+                     </Link>
                       and{" "}
                       <span className="text-gray-600 underline">
                         Privacy Policy

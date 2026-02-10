@@ -2,6 +2,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
+
+
 function SignUp({ users, setUsers }) {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -12,11 +14,13 @@ function SignUp({ users, setUsers }) {
   const [error, setError] = useState("");
   const [isCreating, setIsCreating] = useState(false);
   const [creatingStep, setCreatingStep] = useState(0);
+
   const steps = [
     "Creating your account...",
     "Preparing your dashboard...",
     "Almost done...",
   ];
+
   // -------------------------
   // STRICT VALIDATION HELPERS
   // -------------------------
@@ -24,10 +28,12 @@ function SignUp({ users, setUsers }) {
     const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
     return gmailRegex.test(email);
   };
+
   const getStoredUsers = () => {
     const stored = localStorage.getItem("geni_users");
     return stored ? JSON.parse(stored) : [];
   };
+
   const saveUserToStorage = (user) => {
     const existingUsers = getStoredUsers();
     localStorage.setItem(
@@ -35,6 +41,7 @@ function SignUp({ users, setUsers }) {
       JSON.stringify([...existingUsers, user])
     );
   };
+
   // -------------------------
   // HANDLERS
   // -------------------------
@@ -44,35 +51,44 @@ function SignUp({ users, setUsers }) {
       [e.target.name]: e.target.value,
     }));
   };
+
   const handleSignUp = (e) => {
     e.preventDefault();
     const name = formData.name.trim();
     const email = formData.email.trim().toLowerCase();
     const password = formData.password;
+
     if (!name || !email || !password) {
       setError("All fields are required.");
       return;
     }
+
     if (!isValidEmail(email)) {
       setError("Please use a valid gmail address.");
       return;
     }
+
     if (password.length < 8) {
       setError("Password must be at least 8 characters.");
       return;
     }
+
     const existingUsers = getStoredUsers();
     const emailExists = existingUsers.some((user) => user.email === email);
+
     if (emailExists) {
       setError("Email is already registered.");
       return;
     }
+
     setError("");
     setIsCreating(true);
     setCreatingStep(0);
+
     const newUser = { name, email, password };
     saveUserToStorage(newUser);
     setUsers((prev) => [...prev, newUser]);
+
     let stepIndex = 0;
     const interval = setInterval(() => {
       setCreatingStep(stepIndex);
@@ -83,12 +99,68 @@ function SignUp({ users, setUsers }) {
       }
     }, 1500);
   };
+
+  // -------------------------
+  // GOOGLE SIGN IN HANDLER
+  // -------------------------
+  const handleGoogleSignIn = async () => {
+    try {
+      setIsCreating(true);
+      setCreatingStep(0);
+      
+      const result = await signInWithGoogle();
+      const user = result.user;
+
+      // Save Google user data to localStorage
+      const googleUser = {
+        name: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+        uid: user.uid,
+        provider: "google"
+      };
+
+      // Check if user already exists
+      const existingUsers = getStoredUsers();
+      const userExists = existingUsers.some((u) => u.email === user.email);
+
+      if (!userExists) {
+        saveUserToStorage(googleUser);
+        setUsers((prev) => [...prev, googleUser]);
+      }
+
+      // Animate through steps
+      let stepIndex = 0;
+      const interval = setInterval(() => {
+        setCreatingStep(stepIndex);
+        stepIndex++;
+        if (stepIndex >= steps.length) {
+          clearInterval(interval);
+          setTimeout(() => navigate("/"), 500);
+        }
+      }, 1500);
+
+    } catch (error) {
+      console.error("Google sign-in error:", error);
+      setIsCreating(false);
+      
+      // Handle specific error cases
+      if (error.code === "auth/popup-closed-by-user") {
+        setError("Sign-in cancelled. Please try again.");
+      } else if (error.code === "auth/popup-blocked") {
+        setError("Popup was blocked. Please allow popups for this site.");
+      } else {
+        setError("Failed to sign in with Google. Please try again.");
+      }
+    }
+  };
+
   return (
     <>
-      {/* RESPONSIVE WRAPPER (ONLY CHANGE) */}
+      {/* RESPONSIVE WRAPPER */}
       <div className="min-h-screen flex justify-center px-4">
         <div className="w-full max-w-md">
-          {/* ORIGINAL UI — UNCHANGED */}
+          {/* ORIGINAL UI */}
           <div className="w-full bg-white">
             <div className="w-full bg-white p-6">
               <div className="w-full">
@@ -156,7 +228,7 @@ function SignUp({ users, setUsers }) {
                     <button
                       type="submit"
                       disabled={isCreating}
-                      className="w-full py-3 bg-gray-700 rounded-full mt-4 text-white font-medium text-md bg-gradient-to-r from-gray-800 via-black to-gray-800"
+                      className="w-full py-3 bg-gray-700 rounded-full mt-4 text-white font-medium text-md bg-gradient-to-r from-gray-800 via-black to-gray-800 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       Sign up
                     </button>
@@ -165,12 +237,17 @@ function SignUp({ users, setUsers }) {
                       <span className="px-2 text-gray-400 text-sm">or</span>
                       <hr className="flex-1 border-gray-300" />
                     </div>
-                    <div className="relative flex justify-center items-center w-full py-3 border-1 border-gray-500 rounded-full">
+                    <button
+                      type="button"
+                      onClick={handleGoogleSignIn}
+                      disabled={isCreating}
+                      className="relative flex justify-center items-center w-full py-3 border-1 border-gray-500 rounded-full hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
                       <FcGoogle className="w-5 h-5 mr-6" />
                       <span className="font-medium text-md text-gray-500">
                         Continue with Google
                       </span>
-                    </div>
+                    </button>
                     <p className="text-center text-gray-500 text-md mt-0">
                       Already have an account?
                       <Link to="/login">
@@ -196,7 +273,8 @@ function SignUp({ users, setUsers }) {
           </div>
         </div>
       </div>
-      {/* OVERLAY — UNCHANGED */}
+
+      {/* OVERLAY */}
       <AnimatePresence>
         {isCreating && (
           <motion.div
@@ -223,4 +301,5 @@ function SignUp({ users, setUsers }) {
     </>
   );
 }
+
 export default SignUp;

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import InputBox from "./InputBox";
 import { motion } from "framer-motion";
+import WaveTypingIndicator from "./Components/WaveTypingIndicator";
 function ChatPage({
   messages,
   setMessages,
@@ -18,10 +19,8 @@ function ChatPage({
 }) {
   return (
     <>
-    <div
-   
-     className="">
-      <div 
+    <div>
+      <div
       ref={scrollbarRef}
       className="mt-5 flex flex-col justify-center space-y-4 p-4 mb-30">
         {selectedChat?.messages.map((item) => (
@@ -40,34 +39,19 @@ function ChatPage({
             >
               <h2 className="text-xs font-semibold opacity-60 mb-1"></h2>
               {item.typing ? (
-                 <div className=" px-4 py-2 rounded-lg w-20 flex items-center justify-center space-x-1">
-              {[0, 1, 2,3].map((i) => (
-                <motion.span
-                  key={i}
-                  className="bg-gray-400 rounded-full w-2 h-2"
-                  animate={{ y: [0, -3, 0,] }} // bounce up and down
-                  transition={{
-                    duration: 0.6,
-                    repeat: Infinity,
-                    repeatType: "loop",
-                    delay: i * 0.2, // stagger each dot
-                  }}
-                />
-              ))}
-              </div>
+                <WaveTypingIndicator />
               ) : (
                 <>
                 {item.image &&
                 (<img src={item.image} className="w-50 h-50 rounded-xl"/>)}
                 {item.message? <span className={`text-sm text-gray-900 ${item.sender==="user"? "bg-gray-100 py-2 px-5 rounded-xl text-gray-900":null}`}>{item.message}</span> :null}
-               
+              
                 </>
               )}
             </div>
           </div>
         ))}
-
-        
+       
       </div>
       {/*the div containing the input on chat page*/}
       <div className="h-34 pb-2 fixed bottom-0 left-0 bg-white md:overflow-x-hidden pl-2 pr-2 left-0 md:left-105 fixed bottom-0 w-full bg-re-300">

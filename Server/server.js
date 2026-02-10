@@ -8,7 +8,8 @@ app.use(cors());
 app.use(express.json());
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-   app.post("/api/chat", async (req, res) => {
+
+app.post("/api/chat", async (req, res) => {
   try {
     const { prompt } = req.body;
     if (!prompt) {
@@ -21,6 +22,7 @@ const model = genAI.getGenerativeModel({ model: "gemini-pro" });
     // Gemini response structure
     // result.output[0].content[0].text
     const reply = result.output?.[0]?.content?.[0]?.text || "No response";
+    console.log(reply)
     res.json({ reply });
   } catch (err) {
     console.error("Gemini error:", err);

@@ -44,71 +44,90 @@ function InputBox({
 
           {openbox && (
             <>
-              <div className=" z-[10000] p-6 fixed bottom-0 left-0 right-0 w-full h-[420px] bg-white rounded-lg ">
-                <div className="flex gap-5 ">
-                  <motion.div className="flex-col rounded-xl h-22 flex justify-center items-center flex-1 bg-gray-100">
-                    <CameraIcon className="w-8 h-8 text-gray-900" />
-                    <span>Camera</span>
-                  </motion.div>
+              <div className=" z-[10000] p-6 fixed bottom-20 left-5 right-10 h-[320px] bg-white rounded-2xl ">
+                <div className="flex gap-5 flex-col overflow-x">
+                  <div className="flex flex-col gap-8">
+                    <div
+                      onClick={() =>
+                        document.getElementById("fileInput").click()
+                      }
+                      className="flex gap-3 rounded-xl h-22 flex items-center flex-1 "
+                    >
+                      <input
+                        type="file"
+                        accept="image/*"
+                        id="fileInput"
+                        className="hidden text-black"
+                        onChange={(e) => {
+                          const file = e.target.files[0];
+                          if (file) {
+                            setselectedImage(URL.createObjectURL(file));
+                          }
+                        }}
+                      />
+                      <div className="py-2 px-2 bg-gray-100 rounded-full">
+                        <PhotoIcon className="w-6 h-6 text-gray-900" />
+                      </div>
 
-                  <div
-                    onClick={() => document.getElementById("fileInput").click()}
-                    className="flex-col rounded-xl h-22 flex justify-center items-center flex-1 bg-gray-100"
-                  >
-                    <input
-                      type="file"
-                      accept="image/*"
-                      id="fileInput"
-                      className="hidden text-black"
-                      onChange={(e) => {
-                        const file = e.target.files[0];
-                        if (file) {
-                          setselectedImage(URL.createObjectURL(file));
-                        }
-                      }}
-                    />
-                    <PhotoIcon className="w-8 h-8 text-gray-900" />
-                    <span>Photos</span>
-                  </div>
-                  <div className="flex-col rounded-xl h-22 flex justify-center items-center flex-1 bg-gray-100">
-                    <FolderIcon className="w-8 h-8 text-gray-900" />
-                    <span>Files</span>
-                  </div>
-                </div>
-                <div className="w-full h-[0.06px] bg-gray-300 mt-7"></div>
-                <div className="flex flex-col mt-8">
-                  <div className="items-center gap-4 flex w-full py-3 bg-vioet-400">
-                    <div className="">
-                      <CubeIcon className="w-7 h-7 text-gray-900" />
+                      <span className="text-md">Photos</span>
                     </div>
-                    <div>
-                      <p className="text-md text-black">Create image</p>
-                      <span className=" text-gray-900 text-sm">
-                        Visualize anything
-                      </span>
-                    </div>
-                  </div>
-                  <div className="items-center gap-4 flex w-full py-3 bg-vioet-400">
-                    <div className="">
-                      <LightBulbIcon className="w-7 h-7 text-gray-900" />
-                    </div>
-                    <div>
-                      <p className="text-md text-black">Thinking </p>
-                      <span className=" text-gray-900 text-sm">
-                        Think longer for better answers
-                      </span>
-                    </div>
-                  </div>
 
-                  <div className="items-center gap-4 flex w-full py-3 bg-vioet-400">
-                    <div className="">
-                      <BookOpenIcon className="w-7 h-7 text-gray-900" />
+                    <div
+                      onClick={() =>
+                        document.getElementById("fileInput").click()
+                      }
+                      className="flex gap-3 rounded-xl h-22 flex items-center flex-1 "
+                    >
+                      <input
+                        type="file"
+                        accept="image/*"
+                        id="fileInput"
+                        className="hidden text-black"
+                        onChange={(e) => {
+                          const file = e.target.files[0];
+                          if (file) {
+                            setselectedImage(URL.createObjectURL(file));
+                          }
+                        }}
+                      />
+                      <div className="py-2 px-2 bg-gray-100 rounded-full">
+                        <CameraIcon className="w-6 h-6 text-gray-900" />
+                      </div>
+
+                      <span>Camera</span>
                     </div>
-                    <div>
-                      <p className="text-md text-black">Study and learn</p>
-                      <span className="text-gray-900 text-sm">
-                        Learn a new concept
-                      </span>
+
+                    <div
+                      onClick={() =>
+                        document.getElementById("fileInput").click()
+                      }
+                      className="flex gap-3 rounded-xl h-22 flex items-center flex-1 "
+                    >
+                      <input
+                        type="file"
+                        accept="image/*"
+                        id="fileInput"
+                        className="hidden text-black"
+                        onChange={(e) => {
+                          const file = e.target.files[0];
+                          if (file) {
+                            setselectedImage(URL.createObjectURL(file));
+                          }
+                        }}
+                      />
+                      <div className="py-2 px-2 bg-gray-100 rounded-full">
+                        <FolderIcon className="w-6 h-6 text-gray-900" />
+                      </div>
+
+                      <span>Files</span>
+                    </div>
+
+                    <div className="flex gap-3 rounded-xl h-22 flex items-center flex-1 ">
+                      <div className="py-2 px-2 bg-gray-100 rounded-full">
+                        <LightBulbIcon className="w-6 h-6 text-gray-900" />
+                      </div>
+
+                      <span>Thinking</span>
                     </div>
                   </div>
                 </div>
@@ -117,7 +136,7 @@ function InputBox({
               <motion.div
                 onClick={handlePopup}
                 className="fixed inset-0 z-[9999] md:hidden"
-                style={{ backgroundColor: "rgba(0,0,0,0.1)" }}
+                style={{ backgroundColor: "rgba(0,0,0,0.03)" }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}

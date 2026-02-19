@@ -26,7 +26,7 @@ function Chatwindow({
   // -------------------
   // TYPING EFFECT FOR HEADER
   // -------------------
-  let fullText = "Hello I'm Geni AI";
+  let fullText = "Hello I'm Geni";
   const [displayedText, setDisplayedText] = useState("");
   useEffect(() => {
     let currentIndex = 0;
@@ -37,7 +37,7 @@ function Chatwindow({
     }, 120);
     return () => clearInterval(interval);
   }, []);
-  let welcome = "Hi I'm Geni AI";
+  let welcome = "Hi I'm Geni ";
   const [displayedwelcome, setDisplayedwelcome] = useState("");
   useEffect(() => {
     let currentIndex = 0;

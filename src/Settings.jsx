@@ -18,6 +18,7 @@ import {
   PencilIcon,
   ArrowLeftIcon,
   CameraIcon,
+  CalculatorIcon,
 } from "@heroicons/react/24/outline";
 
 function Settings() {
@@ -320,6 +321,15 @@ function Settings() {
                 <LockClosedIcon className="w-5 h-5" />
                 <span className="text-sm font-medium text-gray-500">
                   Data Control
+                </span>
+              </div>
+
+               <div
+               onClick={()=>navigate("/calculator")} 
+               className="w-full flex h-15 flex gap-4">
+                <CalculatorIcon className="w-5 h-5" />
+                <span className="text-sm font-medium text-gray-500">
+                  Calculator
                 </span>
               </div>
 
